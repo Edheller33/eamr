@@ -1,842 +1,611 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EAMR – Edgar Romero | Estratega de Activos Musicales Registrables</title>
-<meta name="description" content="Tarjeta de presentación digital de Edgar Romero – EAMR. Tu historia, nuestra ciencia.">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="description" content="EAMR – Estratega de Activos Musicales Registrables. Tarjeta de presentación digital profesional.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="EAMR">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:title" content="EAMR – Estratega de Activos Musicales Registrables">
+<meta property="og:description" content="Tarjeta de presentación digital profesional con acceso a perfil completo.">
+<meta property="og:type" content="profile">
+<meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Crect fill='%230a0a0a' width='512' height='512'/%3E%3Ctext x='256' y='300' font-size='240' text-anchor='middle' fill='%23c9a84c' font-family='serif'%3EE%3C/text%3E%3C/svg%3E">
+<title>EAMR – Estratega de Activos Musicales Registrables</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
-<!-- QR Code library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script>
+if('serviceWorker' in navigator){
+  const sw=`
+    const CACHE='eamr-v1';
+    const ASSETS=['/'];
+    self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));self.skipWaiting();});
+    self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(n=>n!==CACHE).map(n=>caches.delete(n)))));self.clients.claim();});
+    self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>new Response('Offline',{status:503}))));});
+  `;
+  const blob=new Blob([sw],{type:'application/javascript'});
+  const url=URL.createObjectURL(blob);
+  navigator.serviceWorker.register(url).catch(()=>{});
+}
+</script>
 
 <style>
-  :root {
-    --gold:        #C9A84C;
-    --gold-light:  #E8C97A;
-    --gold-dark:   #8B6914;
-    --black:       #0A0A0A;
-    --black-card:  #111111;
-    --black-mid:   #1A1A1A;
-    --white:       #F5F0E8;
-    --white-dim:   #B8B0A0;
-    --red-accent:  #8B1A1A;
-  }
+:root{
+  --gold:#c9a84c;
+  --gold-light:#e8c96a;
+  --gold-dark:#8a6420;
+  --black:#0a0a0a;
+  --black-2:#111111;
+  --black-3:#1a1a1a;
+  --white:#f5f0e8;
+  --white-dim:rgba(245,240,232,0.6);
+  --white-ghost:rgba(245,240,232,0.1);
+  --gold-glow:rgba(201,168,76,0.25);
+  --serif:'Playfair Display',Georgia,serif;
+  --mono:'JetBrains Mono','Courier New',monospace;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 
-  body {
-    background: #080808;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    font-family: 'Montserrat', sans-serif;
-    color: var(--white);
-    overflow-x: hidden;
-    padding-bottom: 3rem;
-  }
+html,body{
+  width:100%;height:100%;
+  background:var(--black);
+  color:var(--white);
+  font-family:var(--mono);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
 
-  /* ── Ambient grain overlay ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.5;
-  }
+body{
+  min-height:100dvh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:calc(var(--safe-top) + 12px) 16px calc(var(--safe-bottom) + 20px);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% 110%, rgba(201,168,76,0.08) 0%, transparent 60%),
+    var(--black);
+}
 
-  /* ── Header / Logo bar ── */
-  .site-header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1rem 1rem;
-    position: relative;
-    z-index: 10;
-  }
+/* ── GRAIN OVERLAY ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.6;
+}
 
-  .logo-wordmark {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(2.2rem, 8vw, 3.8rem);
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 40%, var(--gold-light) 60%, var(--gold) 80%, var(--gold-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: none;
-    animation: shimmer 4s ease-in-out infinite;
-    background-size: 200% auto;
-  }
+.card{
+  width:100%;max-width:420px;
+  position:relative;z-index:1;
+  animation:cardIn 0.9s cubic-bezier(0.22,1,0.36,1) both;
+}
 
-  @keyframes shimmer {
-    0%   { background-position: 0% center; }
-    50%  { background-position: 100% center; }
-    100% { background-position: 0% center; }
-  }
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(28px);}
+  to{opacity:1;transform:translateY(0);}
+}
 
-  .tagline-header {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.62rem;
-    font-weight: 300;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.7;
-    text-align: center;
-    margin-top: 0.25rem;
-  }
+/* ── HEADER STRIP ── */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 4px 18px;
+  animation:fadeSlide 0.7s 0.1s both;
+}
 
-  /* ── Gold divider ── */
-  .gold-divider {
-    width: min(320px, 80vw);
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 1rem auto;
-    position: relative;
-    z-index: 10;
-  }
-  .gold-divider::before {
-    content: '◆';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--gold);
-    font-size: 0.55rem;
-    background: #080808;
-    padding: 0 0.4rem;
-  }
+.header-badge{
+  font-size:9px;letter-spacing:0.3em;
+  color:var(--gold);text-transform:uppercase;
+  opacity:0.7;
+}
 
-  /* ── Card container (flip) ── */
-  .card-scene {
-    width: min(420px, 94vw);
-    aspect-ratio: 1.75 / 1;
-    perspective: 1200px;
-    cursor: pointer;
-    position: relative;
-    z-index: 10;
-    margin: 1rem auto;
-  }
+.header-line{
+  flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dark),transparent);
+  margin:0 12px;
+}
 
-  .card-flip {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1);
-  }
+/* ── MAIN CARD BODY ── */
+.card-body{
+  background:linear-gradient(145deg,var(--black-2) 0%,var(--black-3) 100%);
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:
+    0 0 0 1px rgba(201,168,76,0.05),
+    0 32px 64px rgba(0,0,0,0.8),
+    inset 0 1px 0 rgba(201,168,76,0.15);
+  animation:fadeSlide 0.7s 0.2s both;
+}
 
-  .card-scene.flipped .card-flip {
-    transform: rotateY(180deg);
-  }
+@keyframes fadeSlide{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
 
-  .card-face {
-    position: absolute;
-    inset: 0;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow:
-      0 0 0 1px rgba(201,168,76,0.25),
-      0 8px 32px rgba(0,0,0,0.8),
-      0 0 60px rgba(201,168,76,0.08);
-  }
+/* ── GOLDEN TOP ACCENT ── */
+.card-accent{
+  height:3px;
+  background:linear-gradient(90deg,transparent 0%,var(--gold-dark) 20%,var(--gold-light) 50%,var(--gold-dark) 80%,transparent 100%);
+}
 
-  .card-back {
-    transform: rotateY(180deg);
-  }
+/* ── IDENTITY BLOCK ── */
+.identity{
+  padding:28px 24px 20px;
+  text-align:center;
+  position:relative;
+}
 
-  /* ── Flip hint ── */
-  .flip-hint {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.55;
-    text-align: center;
-    margin-top: 0.5rem;
-    position: relative;
-    z-index: 10;
-    animation: pulse-hint 2.5s ease-in-out infinite;
-  }
-  @keyframes pulse-hint {
-    0%, 100% { opacity: 0.35; }
-    50%       { opacity: 0.7; }
-  }
+.identity::after{
+  content:'';
+  display:block;
+  width:48px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:20px auto 0;
+}
 
-  /* ══════════════════════════════════════
-     CARD FRONT
-  ══════════════════════════════════════ */
-  .front-bg {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #0D0D0D 0%, #1A1A1A 50%, #0D0D0D 100%);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(0.8rem, 3vw, 1.5rem);
-  }
+.logo-text{
+  font-family:var(--serif);
+  font-size:52px;font-weight:900;
+  letter-spacing:0.06em;
+  line-height:1;
+  background:linear-gradient(135deg,var(--gold-dark) 0%,var(--gold-light) 40%,var(--gold) 60%,var(--gold-dark) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(201,168,76,0.3));
+  margin-bottom:10px;
+  animation:shimmer 4s ease-in-out infinite;
+  background-size:200% 200%;
+}
 
-  /* Waveform decorative lines */
-  .front-bg::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      repeating-linear-gradient(
-        90deg,
-        transparent 0px,
-        transparent 2px,
-        rgba(201,168,76,0.03) 2px,
-        rgba(201,168,76,0.03) 3px
-      );
-    pointer-events: none;
-  }
+@keyframes shimmer{
+  0%,100%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+}
 
-  /* Corner accents */
-  .corner {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    border-color: var(--gold);
-    border-style: solid;
-    opacity: 0.5;
-  }
-  .corner-tl { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
-  .corner-tr { top: 8px; right: 8px; border-width: 1px 1px 0 0; }
-  .corner-bl { bottom: 8px; left: 8px; border-width: 0 0 1px 1px; }
-  .corner-br { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+.tagline{
+  font-size:9.5px;
+  letter-spacing:0.25em;
+  color:var(--gold);
+  text-transform:uppercase;
+  opacity:0.8;
+  line-height:1.6;
+}
 
-  .front-logo {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1.8rem, 7vw, 3rem);
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 40%, var(--gold-light) 65%, var(--gold) 85%, var(--gold-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-    margin-bottom: 0.15em;
-  }
+.name-block{
+  margin-top:14px;
+}
 
-  .front-subtitle {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.38rem, 1.4vw, 0.55rem);
-    font-weight: 300;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.75;
-    text-align: center;
-    margin-bottom: 0.8em;
-  }
+.full-name{
+  font-family:var(--serif);
+  font-size:19px;font-weight:400;
+  color:var(--white);
+  letter-spacing:0.04em;
+}
 
-  /* Fingerprint / waveform icon area */
-  .front-icon-row {
-    display: flex;
-    align-items: center;
-    gap: clamp(0.4rem, 1.5vw, 0.8rem);
-    margin-bottom: 0.7em;
-  }
+.title-role{
+  font-size:10px;
+  letter-spacing:0.18em;
+  color:var(--white-dim);
+  text-transform:uppercase;
+  margin-top:4px;
+}
 
-  .wave-bars {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    height: 28px;
-  }
-  .wave-bars span {
-    display: block;
-    width: 2px;
-    background: linear-gradient(to top, var(--gold-dark), var(--gold-light));
-    border-radius: 1px;
-    animation: wave-anim 1.4s ease-in-out infinite;
-  }
-  .wave-bars span:nth-child(1)  { height: 30%; animation-delay: 0s; }
-  .wave-bars span:nth-child(2)  { height: 55%; animation-delay: 0.1s; }
-  .wave-bars span:nth-child(3)  { height: 80%; animation-delay: 0.2s; }
-  .wave-bars span:nth-child(4)  { height: 100%; animation-delay: 0.3s; }
-  .wave-bars span:nth-child(5)  { height: 70%; animation-delay: 0.4s; }
-  .wave-bars span:nth-child(6)  { height: 45%; animation-delay: 0.5s; }
-  .wave-bars span:nth-child(7)  { height: 65%; animation-delay: 0.6s; }
-  .wave-bars span:nth-child(8)  { height: 90%; animation-delay: 0.7s; }
-  .wave-bars span:nth-child(9)  { height: 60%; animation-delay: 0.8s; }
-  .wave-bars span:nth-child(10) { height: 35%; animation-delay: 0.9s; }
-  .wave-bars span:nth-child(11) { height: 20%; animation-delay: 1.0s; }
+/* ── QR SECTION ── */
+.qr-section{
+  padding:0 24px 24px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+}
 
-  @keyframes wave-anim {
-    0%, 100% { transform: scaleY(1);   opacity: 0.6; }
-    50%       { transform: scaleY(0.4); opacity: 1; }
+.qr-frame{
+  position:relative;
+  padding:14px;
+  background:var(--black);
+  border-radius:16px;
+  border:1px solid rgba(201,168,76,0.15);
+  box-shadow:
+    0 0 0 6px rgba(201,168,76,0.04),
+    inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* Corner decorations */
+.qr-frame::before,.qr-frame::after{
+  content:'';
+  position:absolute;
+  width:18px;height:18px;
+  border-color:var(--gold);
+  border-style:solid;
+}
+.qr-frame::before{top:6px;left:6px;border-width:2px 0 0 2px;border-radius:4px 0 0 0;}
+.qr-frame::after{bottom:6px;right:6px;border-width:0 2px 2px 0;border-radius:0 0 4px 0;}
+
+.qr-corner-tr,.qr-corner-bl{
+  position:absolute;
+  width:18px;height:18px;
+  border-color:var(--gold);
+  border-style:solid;
+}
+.qr-corner-tr{top:6px;right:6px;border-width:2px 2px 0 0;border-radius:0 4px 0 0;}
+.qr-corner-bl{bottom:6px;left:6px;border-width:0 0 2px 2px;border-radius:0 0 0 4px;}
+
+.qr-img{
+  display:block;
+  width:180px;height:180px;
+  border-radius:6px;
+  image-rendering:pixelated;
+}
+
+.qr-label{
+  text-align:center;
+}
+
+.qr-label-main{
+  font-size:10px;letter-spacing:0.2em;
+  color:var(--gold);text-transform:uppercase;
+  opacity:0.9;
+}
+
+.qr-label-sub{
+  font-size:9px;letter-spacing:0.1em;
+  color:var(--white-dim);
+  margin-top:3px;
+}
+
+/* ── DIVIDER ── */
+.divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,0.15),transparent);
+  margin:0 24px;
+}
+
+/* ── CONTACT GRID ── */
+.contact-grid{
+  padding:20px 24px 24px;
+  display:grid;
+  gap:12px;
+}
+
+.contact-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 14px;
+  background:var(--white-ghost);
+  border-radius:10px;
+  border:1px solid rgba(201,168,76,0.08);
+  text-decoration:none;
+  transition:background 0.2s,border-color 0.2s;
+  cursor:pointer;
+  -webkit-user-select:none;
+}
+
+.contact-row:active{
+  background:rgba(201,168,76,0.1);
+  border-color:rgba(201,168,76,0.3);
+}
+
+.contact-icon{
+  width:32px;height:32px;
+  border-radius:8px;
+  background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(201,168,76,0.05));
+  border:1px solid rgba(201,168,76,0.2);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  font-size:14px;
+}
+
+.contact-info{flex:1;min-width:0;}
+.contact-label{
+  font-size:8.5px;letter-spacing:0.2em;
+  color:var(--gold);text-transform:uppercase;
+  opacity:0.8;
+}
+.contact-value{
+  font-size:11.5px;
+  color:var(--white);
+  letter-spacing:0.03em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  margin-top:2px;
+}
+
+.contact-arrow{
+  color:var(--gold);opacity:0.4;font-size:12px;
+}
+
+/* ── SCAN HINT ── */
+.scan-hint{
+  display:flex;align-items:center;justify-content:center;
+  gap:8px;
+  padding:14px 24px;
+  animation:pulse-hint 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-hint{
+  0%,100%{opacity:0.5;}
+  50%{opacity:1;}
+}
+
+.scan-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold);
+  animation:scan-blink 1.5s ease-in-out infinite;
+}
+.scan-dot:nth-child(2){animation-delay:0.3s;}
+.scan-dot:nth-child(3){animation-delay:0.6s;}
+
+@keyframes scan-blink{
+  0%,80%,100%{opacity:0.3;transform:scale(0.8);}
+  40%{opacity:1;transform:scale(1.1);}
+}
+
+.scan-text{
+  font-size:9px;letter-spacing:0.18em;
+  color:var(--gold);text-transform:uppercase;
+  opacity:0.7;
+}
+
+/* ── FOOTER STRIP ── */
+.card-footer{
+  height:3px;
+  background:linear-gradient(90deg,transparent 0%,var(--gold-dark) 20%,var(--gold) 50%,var(--gold-dark) 80%,transparent 100%);
+  opacity:0.5;
+}
+
+/* ── BOTTOM METADATA ── */
+.meta-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 4px 0;
+  animation:fadeSlide 0.7s 0.5s both;
+}
+
+.meta-tag{
+  font-size:8px;letter-spacing:0.2em;
+  color:var(--gold);text-transform:uppercase;
+  opacity:0.4;
+}
+
+/* ── INSTALL BUTTON ── */
+#installBtn{
+  display:none;
+  margin-top:16px;
+  width:100%;max-width:420px;
+  padding:14px 24px;
+  background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(201,168,76,0.08));
+  border:1px solid rgba(201,168,76,0.3);
+  border-radius:12px;
+  color:var(--gold);
+  font-family:var(--mono);
+  font-size:10px;letter-spacing:0.2em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all 0.2s;
+  z-index:1;position:relative;
+  animation:fadeSlide 0.7s 0.6s both;
+}
+
+#installBtn:active{
+  background:rgba(201,168,76,0.2);
+  transform:scale(0.98);
+}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:calc(var(--safe-bottom) + 24px);left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--black-3);
+  border:1px solid rgba(201,168,76,0.3);
+  border-radius:10px;
+  padding:10px 20px;
+  font-size:10px;letter-spacing:0.1em;
+  color:var(--gold);
+  opacity:0;pointer-events:none;
+  transition:all 0.3s;z-index:999;
+  white-space:nowrap;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── RESPONSIVE TOUCH ── */
+@media (hover:hover){
+  .contact-row:hover{
+    background:rgba(201,168,76,0.08);
+    border-color:rgba(201,168,76,0.25);
   }
-
-  .fingerprint-icon {
-    width: clamp(28px, 7vw, 40px);
-    height: clamp(28px, 7vw, 40px);
-    opacity: 0.85;
-    filter: drop-shadow(0 0 6px rgba(201,168,76,0.5));
-  }
-
-  .front-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1rem, 4vw, 1.6rem);
-    font-weight: 600;
-    color: var(--white);
-    letter-spacing: 0.06em;
-    text-align: center;
-    margin-bottom: 0.15em;
-  }
-
-  .front-tagline {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.42rem, 1.3vw, 0.58rem);
-    font-weight: 300;
-    color: var(--white-dim);
-    letter-spacing: 0.15em;
-    text-align: center;
-    font-style: italic;
-  }
-
-  /* ══════════════════════════════════════
-     CARD BACK
-  ══════════════════════════════════════ */
-  .back-bg {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #0D0D0D 0%, #1C1C1C 60%, #111111 100%);
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0;
-    padding: clamp(0.7rem, 2.5vw, 1.2rem);
-  }
-
-  .back-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-right: 0.8rem;
-  }
-
-  .back-title {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(0.55rem, 1.8vw, 0.75rem);
-    letter-spacing: 0.18em;
-    color: var(--gold);
-    margin-bottom: 0.5em;
-    border-bottom: 1px solid rgba(201,168,76,0.2);
-    padding-bottom: 0.3em;
-  }
-
-  .back-services {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35em;
-    margin-bottom: 0.5em;
-  }
-
-  .service-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.4em;
-  }
-
-  .service-icon {
-    font-size: clamp(0.6rem, 1.8vw, 0.8rem);
-    line-height: 1.3;
-    flex-shrink: 0;
-  }
-
-  .service-text strong {
-    display: block;
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.38rem, 1.15vw, 0.52rem);
-    font-weight: 600;
-    color: var(--gold);
-    letter-spacing: 0.06em;
-  }
-
-  .service-text span {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.32rem, 1vw, 0.44rem);
-    font-weight: 300;
-    color: var(--white-dim);
-    line-height: 1.3;
-  }
-
-  .back-contact {
-    border-top: 1px solid rgba(201,168,76,0.15);
-    padding-top: 0.4em;
-  }
-
-  .contact-line {
-    display: flex;
-    align-items: center;
-    gap: 0.3em;
-    margin-bottom: 0.2em;
-  }
-
-  .contact-line .icon {
-    font-size: clamp(0.5rem, 1.5vw, 0.65rem);
-    opacity: 0.8;
-    flex-shrink: 0;
-  }
-
-  .contact-line a,
-  .contact-line span {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.3rem, 0.95vw, 0.42rem);
-    font-weight: 400;
-    color: var(--white-dim);
-    text-decoration: none;
-    transition: color 0.2s;
-    letter-spacing: 0.04em;
-  }
-  .contact-line a:hover { color: var(--gold-light); }
-
-  /* QR side */
-  .back-right {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .qr-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.3rem, 0.9vw, 0.4rem);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.7;
-    text-align: center;
-    margin-bottom: 0.3em;
-  }
-
-  #qrcode-card {
-    background: var(--white);
-    padding: 4px;
-    border-radius: 4px;
-    border: 1px solid rgba(201,168,76,0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .back-url {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.28rem, 0.8vw, 0.36rem);
-    color: var(--gold);
-    opacity: 0.65;
-    text-align: center;
-    letter-spacing: 0.04em;
-    margin-top: 0.3em;
-    word-break: break-all;
-  }
-
-  /* Corner accents back */
-  .corner-g {
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border-color: var(--gold);
-    border-style: solid;
-    opacity: 0.4;
-  }
-  .corner-g.tl { top: 6px; left: 6px; border-width: 1px 0 0 1px; }
-  .corner-g.tr { top: 6px; right: 6px; border-width: 1px 1px 0 0; }
-  .corner-g.bl { bottom: 6px; left: 6px; border-width: 0 0 1px 1px; }
-  .corner-g.br { bottom: 6px; right: 6px; border-width: 0 1px 1px 0; }
-
-  /* ══════════════════════════════════════
-     ACTION BUTTONS (below card)
-  ══════════════════════════════════════ */
-  .actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 1.2rem;
-    position: relative;
-    z-index: 10;
-  }
-
-  .action-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-    text-decoration: none;
-    color: var(--white);
-    transition: transform 0.2s, opacity 0.2s;
-  }
-
-  .action-btn:hover { transform: translateY(-2px); opacity: 0.9; }
-
-  .action-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    box-shadow: 0 4px 16px rgba(201,168,76,0.3);
-  }
-
-  .action-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--white-dim);
-  }
-
-  /* ══════════════════════════════════════
-     PROFILE / ABOUT SECTION
-  ══════════════════════════════════════ */
-  .profile-section {
-    width: min(420px, 94vw);
-    margin: 1.5rem auto 0;
-    position: relative;
-    z-index: 10;
-    background: linear-gradient(135deg, rgba(201,168,76,0.04), rgba(201,168,76,0.01));
-    border: 1px solid rgba(201,168,76,0.12);
-    border-radius: 12px;
-    padding: 1.2rem 1.4rem;
-  }
-
-  .profile-section h2 {
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.8rem;
-    opacity: 0.8;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.7rem;
-  }
-
-  .service-card {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(201,168,76,0.1);
-    border-radius: 8px;
-    padding: 0.7rem 0.8rem;
-    transition: border-color 0.2s, background 0.2s;
-  }
-
-  .service-card:hover {
-    border-color: rgba(201,168,76,0.3);
-    background: rgba(201,168,76,0.04);
-  }
-
-  .service-card .sc-icon { font-size: 1.2rem; margin-bottom: 0.3rem; }
-
-  .service-card .sc-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.58rem;
-    font-weight: 600;
-    color: var(--gold);
-    letter-spacing: 0.05em;
-    margin-bottom: 0.2rem;
-  }
-
-  .service-card .sc-desc {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.5rem;
-    font-weight: 300;
-    color: var(--white-dim);
-    line-height: 1.4;
-  }
-
-  /* ══════════════════════════════════════
-     CATALOG LINK BUTTON
-  ══════════════════════════════════════ */
-  .catalog-btn {
-    display: block;
-    width: min(420px, 94vw);
-    margin: 1rem auto 0;
-    text-align: center;
-    text-decoration: none;
-    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-dark) 100%);
-    color: #0A0A0A;
-    font-family: 'Cinzel', serif;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    padding: 0.9rem 1rem;
-    border-radius: 8px;
-    position: relative;
-    z-index: 10;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(201,168,76,0.25);
-    background-size: 200% auto;
-  }
-
-  .catalog-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(201,168,76,0.4);
-    background-position: right center;
-  }
-
-  /* ══════════════════════════════════════
-     FOOTER
-  ══════════════════════════════════════ */
-  .site-footer {
-    margin-top: 2.5rem;
-    text-align: center;
-    position: relative;
-    z-index: 10;
-  }
-
-  .site-footer p {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.48rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.3;
-  }
-
-  /* Entrance animation */
-  .card-scene, .profile-section, .catalog-btn, .actions {
-    animation: fadeUp 0.7s ease both;
-  }
-  .profile-section { animation-delay: 0.15s; }
-  .catalog-btn     { animation-delay: 0.25s; }
-  .actions         { animation-delay: 0.1s; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+}
 </style>
 </head>
 <body>
 
-<!-- ── HEADER ── -->
-<header class="site-header">
-  <div style="text-align:center;">
-    <div class="logo-wordmark">EAMR</div>
-    <div class="tagline-header">Estratega de Activos Musicales Registrables</div>
+<div class="card">
+
+  <div class="header">
+    <span class="header-badge">Tarjeta Digital</span>
+    <div class="header-line"></div>
+    <span class="header-badge">v 2026</span>
   </div>
-</header>
-<div class="gold-divider"></div>
 
-<!-- ── CARD SCENE ── -->
-<div class="card-scene" id="cardScene" onclick="toggleFlip()" title="Toca para girar">
-  <div class="card-flip" id="cardFlip">
+  <div class="card-body">
+    <div class="card-accent"></div>
 
-    <!-- FRONT -->
-    <div class="card-face">
-      <div class="front-bg">
-        <div class="corner corner-tl"></div>
-        <div class="corner corner-tr"></div>
-        <div class="corner corner-bl"></div>
-        <div class="corner corner-br"></div>
-
-        <div class="front-logo">EAMR</div>
-        <div class="front-subtitle">Estratega de Activos Musicales Registrables</div>
-
-        <div class="front-icon-row">
-          <!-- Left waveform -->
-          <div class="wave-bars">
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-          </div>
-          <!-- Fingerprint SVG -->
-          <svg class="fingerprint-icon" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="30" cy="30" r="29" stroke="url(#gf)" stroke-width="0.8" opacity="0.3"/>
-            <path d="M30 8C18.954 8 10 16.954 10 28c0 8.837 7.163 16 16 16" stroke="url(#gf)" stroke-width="1.3" stroke-linecap="round" fill="none"/>
-            <path d="M30 13c-9.389 0-17 7.611-17 17 0 6.627 5.373 12 12 12" stroke="url(#gf)" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.8"/>
-            <path d="M30 18c-6.627 0-12 5.373-12 12 0 4.418 3.582 8 8 8" stroke="url(#gf)" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.7"/>
-            <path d="M30 23c-3.866 0-7 3.134-7 7 0 2.209 1.791 4 4 4" stroke="url(#gf)" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.6"/>
-            <circle cx="30" cy="30" r="2" fill="url(#gf)" opacity="0.9"/>
-            <defs>
-              <linearGradient id="gf" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#8B6914"/>
-                <stop offset="0.4" stop-color="#C9A84C"/>
-                <stop offset="0.65" stop-color="#E8C97A"/>
-                <stop offset="1" stop-color="#8B6914"/>
-              </linearGradient>
-            </defs>
-          </svg>
-          <!-- Right waveform (mirrored) -->
-          <div class="wave-bars" style="transform:scaleX(-1)">
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-          </div>
-        </div>
-
-        <div class="front-name">Edgardo Romero</div>
-        <div class="front-tagline">Tu historia, nuestra ciencia. Emoción real al instante.</div>
+    <div class="identity">
+      <div class="logo-text">EAMR</div>
+      <div class="tagline">Estratega de Activos<br>Musicales Registrables</div>
+      <div class="name-block">
+        <div class="full-name">Edgar A. Morales R.</div>
+        <div class="title-role">Consultor · Productor · Registrador</div>
       </div>
     </div>
 
-    <!-- BACK -->
-    <div class="card-face card-back">
-      <div class="back-bg">
-        <div class="corner-g tl"></div>
-        <div class="corner-g tr"></div>
-        <div class="corner-g bl"></div>
-        <div class="corner-g br"></div>
-
-        <div class="back-left">
-          <div>
-            <div class="back-title">Escanea y guarda mi contacto</div>
-            <div class="back-services">
-              <div class="service-item">
-                <div class="service-icon">⚙️🎵</div>
-                <div class="service-text">
-                  <strong>Personalización Total:</strong>
-                  <span>Texto, estilo, instrumentación. Tú decides.</span>
-                </div>
-              </div>
-              <div class="service-item">
-                <div class="service-icon">🎙️⭐</div>
-                <div class="service-text">
-                  <strong>Calidad de Estudio:</strong>
-                  <span>Sonido profesional sin costos excesivos.</span>
-                </div>
-              </div>
-              <div class="service-item">
-                <div class="service-icon">🔒🌐</div>
-                <div class="service-text">
-                  <strong>Propiedad Total &amp; Seguridad:</strong>
-                  <span>Eres el dueño legal absoluto de tu canción y todos los derechos.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="back-contact">
-            <div class="contact-line">
-              <span class="icon">📱</span>
-              <a href="tel:3343215254">3343215254</a>
-            </div>
-            <div class="contact-line">
-              <span class="icon">📧</span>
-              <a href="mailto:eamr_33@proton.me">eamr_33@proton.me</a>
-            </div>
-            <div class="contact-line">
-              <span class="icon">📷</span>
-              <a href="https://instagram.com/eamr" target="_blank">@eamr</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="back-right">
-          <div class="qr-label">Escanea</div>
-          <div id="qrcode-card"></div>
-          <div class="back-url">edheller33.github.io/Music_dem/</div>
-        </div>
+    <div class="qr-section">
+      <div class="qr-frame">
+        <div class="qr-corner-tr"></div>
+        <div class="qr-corner-bl"></div>
+        <img
+          class="qr-img"
+          src="/mnt/user-data/uploads/31978.png"
+          alt="Código QR – Perfil completo EAMR en GitHub"
+          loading="eager"
+          decoding="async"
+        >
+      </div>
+      <div class="qr-label">
+        <div class="qr-label-main">Escanear para perfil completo</div>
+        <div class="qr-label-sub">Abre tu perfil profesional en GitHub</div>
       </div>
     </div>
 
-  </div><!-- /card-flip -->
-</div><!-- /card-scene -->
+    <div class="scan-hint">
+      <div class="scan-dot"></div>
+      <div class="scan-dot"></div>
+      <div class="scan-dot"></div>
+      <span class="scan-text">Apunta tu cámara al código QR</span>
+      <div class="scan-dot"></div>
+      <div class="scan-dot"></div>
+      <div class="scan-dot"></div>
+    </div>
 
-<p class="flip-hint">↺ toca la tarjeta para girar</p>
+    <div class="divider"></div>
 
-<!-- ── ACTION BUTTONS ── -->
-<div class="actions">
-  <a href="tel:3343215254" class="action-btn">
-    <div class="action-icon">📞</div>
-    <span class="action-label">Llamar</span>
-  </a>
-  <a href="https://wa.me/523343215254" target="_blank" class="action-btn">
-    <div class="action-icon">💬</div>
-    <span class="action-label">WhatsApp</span>
-  </a>
-  <a href="mailto:eamr_33@proton.me" class="action-btn">
-    <div class="action-icon">✉️</div>
-    <span class="action-label">Email</span>
-  </a>
-  <a href="https://instagram.com/eamr" target="_blank" class="action-btn">
-    <div class="action-icon">📷</div>
-    <span class="action-label">Instagram</span>
-  </a>
+    <div class="contact-grid">
+      <a class="contact-row" href="mailto:eamr@example.com" aria-label="Enviar correo electrónico">
+        <div class="contact-icon">✉</div>
+        <div class="contact-info">
+          <div class="contact-label">Correo electrónico</div>
+          <div class="contact-value">eamr@example.com</div>
+        </div>
+        <span class="contact-arrow">›</span>
+      </a>
+
+      <a class="contact-row" href="https://wa.me/523312345678" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+        <div class="contact-icon">💬</div>
+        <div class="contact-info">
+          <div class="contact-label">WhatsApp</div>
+          <div class="contact-value">+52 33 1234 5678</div>
+        </div>
+        <span class="contact-arrow">›</span>
+      </a>
+
+      <a class="contact-row" href="https://github.com/eamr" target="_blank" rel="noopener" aria-label="Ver perfil en GitHub">
+        <div class="contact-icon">⌥</div>
+        <div class="contact-info">
+          <div class="contact-label">GitHub · Perfil completo</div>
+          <div class="contact-value">github.com/eamr</div>
+        </div>
+        <span class="contact-arrow">›</span>
+      </a>
+
+      <div class="contact-row" id="copyBtn" role="button" tabindex="0" aria-label="Copiar datos de contacto">
+        <div class="contact-icon">⊕</div>
+        <div class="contact-info">
+          <div class="contact-label">Guardar contacto</div>
+          <div class="contact-value">Copiar datos vCard</div>
+        </div>
+        <span class="contact-arrow">›</span>
+      </div>
+    </div>
+
+    <div class="card-footer"></div>
+  </div>
+
+  <div class="meta-row">
+    <span class="meta-tag">EAMR · GDL · MX</span>
+    <span class="meta-tag" id="metaDate"></span>
+  </div>
+
 </div>
 
-<!-- ── SERVICES SECTION ── -->
-<section class="profile-section">
-  <h2>Servicios</h2>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="sc-icon">🎶</div>
-      <div class="sc-title">Composición IA</div>
-      <div class="sc-desc">Canciones únicas generadas con IA de calidad profesional, 100% originales.</div>
-    </div>
-    <div class="service-card">
-      <div class="sc-icon">📝</div>
-      <div class="sc-title">Letras Personalizadas</div>
-      <div class="sc-desc">Tu historia, tu mensaje. Letras que conectan con quien más quieres.</div>
-    </div>
-    <div class="service-card">
-      <div class="sc-icon">🎼</div>
-      <div class="sc-title">Estilo a tu Medida</div>
-      <div class="sc-desc">Desde balada hasta corrido, norteño, pop o rock. Tú eliges el género.</div>
-    </div>
-    <div class="service-card">
-      <div class="sc-icon">🔐</div>
-      <div class="sc-title">Derechos Totales</div>
-      <div class="sc-desc">Eres el propietario legal absoluto. Sin licencias adicionales ni restricciones.</div>
-    </div>
-  </div>
-</section>
+<button id="installBtn" aria-label="Instalar aplicación">⊕ &nbsp; Instalar en dispositivo</button>
 
-<!-- ── CATALOG BUTTON ── -->
-<a href="https://edheller33.github.io/Music_dem/" target="_blank" class="catalog-btn">
-  🎵 Ver Catálogo Musical
-</a>
-
-<!-- ── FOOTER ── -->
-<footer class="site-footer">
-  <p>© 2025 EAMR – Edgar Romero · Tu historia, nuestra ciencia</p>
-</footer>
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-  // ── Flip card ──
-  function toggleFlip() {
-    document.getElementById('cardScene').classList.toggle('flipped');
+(function(){
+  // Date
+  const d=new Date();
+  const months=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+  document.getElementById('metaDate').textContent=months[d.getMonth()]+' '+d.getFullYear();
+
+  // Toast
+  function toast(msg,ms=2200){
+    const t=document.getElementById('toast');
+    t.textContent=msg;t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),ms);
   }
 
-  // ── Generate QR code ──
-  window.addEventListener('DOMContentLoaded', () => {
-    const qrContainer = document.getElementById('qrcode-card');
-    const size = Math.min(window.innerWidth * 0.16, 75);
+  // Copy vCard
+  const vcard=`BEGIN:VCARD\nVERSION:3.0\nFN:Edgar A. Morales R.\nORG:EAMR – Estratega de Activos Musicales Registrables\nTEL;TYPE=CELL:+523312345678\nEMAIL:eamr@example.com\nURL:https://github.com/eamr\nNOTE:Consultor · Productor · Registrador\nEND:VCARD`;
 
-    try {
-      new QRCode(qrContainer, {
-        text: 'https://edheller33.github.io/Music_dem/',
-        width:  Math.round(size),
-        height: Math.round(size),
-        colorDark:  '#0A0A0A',
-        colorLight: '#F5F0E8',
-        correctLevel: QRCode.CorrectLevel.H
-      });
-    } catch(e) {
-      qrContainer.innerHTML = '<div style="font-size:0.4rem;color:#C9A84C;text-align:center;padding:4px;">QR<br>disponible</div>';
+  const copyBtn=document.getElementById('copyBtn');
+  copyBtn.addEventListener('click',()=>{
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(vcard).then(()=>toast('✓ Datos copiados al portapapeles'));
+    } else {
+      const ta=document.createElement('textarea');
+      ta.value=vcard;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.focus();ta.select();
+      try{document.execCommand('copy');toast('✓ Datos copiados');}
+      catch(e){toast('No se pudo copiar');}
+      document.body.removeChild(ta);
     }
   });
+  copyBtn.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')copyBtn.click();});
+
+  // PWA install
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt',e=>{
+    e.preventDefault();deferredPrompt=e;
+    const btn=document.getElementById('installBtn');
+    btn.style.display='block';
+    btn.addEventListener('click',async()=>{
+      btn.style.display='none';
+      deferredPrompt.prompt();
+      const{outcome}=await deferredPrompt.userChoice;
+      if(outcome==='accepted')toast('✓ App instalada correctamente');
+      deferredPrompt=null;
+    });
+  });
+
+  window.addEventListener('appinstalled',()=>{
+    document.getElementById('installBtn').style.display='none';
+    toast('✓ EAMR instalada en tu dispositivo');
+  });
+
+  // Manifest inline
+  const manifest={
+    name:'EAMR – Estratega de Activos Musicales Registrables',
+    short_name:'EAMR',
+    description:'Tarjeta de presentación digital profesional',
+    start_url:'/',
+    display:'standalone',
+    background_color:'#0a0a0a',
+    theme_color:'#0a0a0a',
+    orientation:'portrait',
+    icons:[
+      {src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230a0a0a' rx='80'/%3E%3Ctext x='256' y='340' font-size='280' text-anchor='middle' fill='%23c9a84c' font-family='Georgia,serif' font-weight='900'%3EE%3C/text%3E%3C/svg%3E",sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}
+    ]
+  };
+  const mBlob=new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'});
+  const mUrl=URL.createObjectURL(mBlob);
+  const mLink=document.createElement('link');
+  mLink.rel='manifest';mLink.href=mUrl;
+  document.head.appendChild(mLink);
+})();
 </script>
 </body>
 </html>
