@@ -168,6 +168,16 @@
   .corner-tr { top: 8px; right: 8px; border-width: 1px 1px 0 0; }
   .corner-bl { bottom: 8px; left: 8px; border-width: 0 0 1px 1px; }
   .corner-br { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+  /* Nueva clase para el escudo */
+  .front-shield {
+    max-width: clamp(120px, 45vw, 180px); /* responsivo */
+    height: auto;
+    margin-bottom: 1.2rem; /* Más espacio con los elementos inferiores, ya que el escudo es alto */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.4)); /* Brillo dorado suave */
+  }
   .front-logo {
     font-family: 'Cinzel', serif;
     font-size: clamp(1.8rem, 7vw, 3rem);
@@ -476,7 +486,8 @@
 
 <header class="site-header">
   <div style="text-align:center;">
-    <img src="logo.png" alt="EAMR Logo" style="max-width: 250px; width: 80%; height: auto; display: block; margin: 0 auto;">
+    <div class="logo-wordmark">EAMR</div>
+    <div class="tagline-header">Estratega de Activos Musicales Registrables</div>
   </div>
 </header>
 <div class="gold-divider"></div>
@@ -490,8 +501,7 @@
         <div class="corner corner-tr"></div>
         <div class="corner corner-bl"></div>
         <div class="corner corner-br"></div>
-        <div class="front-logo">EAMR</div>
-        <div class="front-subtitle">Estratega de Activos Musicales Registrables</div>
+        <img src="logo.png" alt="EAMR Shield" class="front-shield">
         <div class="front-icon-row">
           <div class="wave-bars"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
           <svg class="fingerprint-icon" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
