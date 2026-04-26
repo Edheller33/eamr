@@ -4,522 +4,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EAMR – Edgar Romero | Estratega de Activos Musicales Registrables</title>
-<meta name="description" content="Tarjeta de presentación digital de Edgar Romero – EAMR. Tu historia, nuestra ciencia.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
   :root {
-    --gold:        #C9A84C;
-    --gold-light:  #E8C97A;
-    --gold-dark:   #8B6914;
-    --black:       #0A0A0A;
-    --black-card:  #111111;
-    --black-mid:   #1A1A1A;
-    --white:       #F5F0E8;
-    --white-dim:   #B8B0A0;
+    --gold: #C9A84C; --gold-light: #E8C97A; --gold-dark: #8B6914;
+    --black: #0A0A0A; --white: #F5F0E8; --white-dim: #B8B0A0;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: #080808;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    font-family: 'Montserrat', sans-serif;
-    color: var(--white);
-    overflow-x: hidden;
-    padding-bottom: 3rem;
+    background: #080808; min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; font-family: 'Montserrat', sans-serif; color: var(--white);
+    overflow-x: hidden; padding-bottom: 3rem;
   }
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.5;
-  }
-  .site-header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1rem 1rem;
-    position: relative;
-    z-index: 10;
-  }
+  /* HEADER */
+  .site-header { width: 100%; padding: 2rem 1rem 1rem; text-align: center; position: relative; z-index: 10; }
   .logo-wordmark {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(2.2rem, 8vw, 3.8rem);
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 40%, var(--gold-light) 60%, var(--gold) 80%, var(--gold-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 4s ease-in-out infinite;
-    background-size: 200% auto;
+    font-family: 'Cinzel', serif; font-size: clamp(2.2rem, 8vw, 3.8rem); font-weight: 700;
+    letter-spacing: 0.18em; background: linear-gradient(135deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shimmer 4s infinite;
   }
-  @keyframes shimmer {
-    0%   { background-position: 0% center; }
-    50%  { background-position: 100% center; }
-    100% { background-position: 0% center; }
-  }
-  .tagline-header {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.62rem;
-    font-weight: 300;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.7;
-    text-align: center;
-    margin-top: 0.25rem;
-  }
-  .gold-divider {
-    width: min(320px, 80vw);
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 1rem auto;
-    position: relative;
-    z-index: 10;
-  }
-  .gold-divider::before {
-    content: '◆';
-    position: absolute;
-    left: 50%; top: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--gold);
-    font-size: 0.55rem;
-    background: #080808;
-    padding: 0 0.4rem;
-  }
-  .card-scene {
-    width: min(420px, 94vw);
-    aspect-ratio: 1.75 / 1;
-    perspective: 1200px;
-    cursor: pointer;
-    position: relative;
-    z-index: 10;
-    margin: 1rem auto;
-  }
-  .card-flip {
-    width: 100%; height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1);
-  }
+  @keyframes shimmer { 0% { background-position: 0% center; } 50% { background-position: 100% center; } 100% { background-position: 0% center; } }
+  .tagline-header { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-top: 0.25rem; }
+  .gold-divider { width: min(320px, 80vw); height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1rem auto; position: relative; }
+  .gold-divider::before { content: '◆'; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--gold); font-size: 0.55rem; background: #080808; padding: 0 0.4rem; }
+
+  /* CARD SCENE */
+  .card-scene { width: min(420px, 94vw); aspect-ratio: 1.75 / 1; perspective: 1200px; margin: 1rem auto; cursor: pointer; position: relative; z-index: 10; }
+  .card-flip { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1); }
   .card-scene.flipped .card-flip { transform: rotateY(180deg); }
-  .card-face {
-    position: absolute;
-    inset: 0;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px rgba(201,168,76,0.25), 0 8px 32px rgba(0,0,0,0.8), 0 0 60px rgba(201,168,76,0.08);
-  }
+  .card-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.8), 0 0 0 1px rgba(201,168,76,0.25); }
   .card-back { transform: rotateY(180deg); }
-  .flip-hint {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.55;
-    text-align: center;
-    margin-top: 0.5rem;
-    position: relative;
-    z-index: 10;
-    animation: pulse-hint 2.5s ease-in-out infinite;
-  }
-  @keyframes pulse-hint {
-    0%, 100% { opacity: 0.35; }
-    50%       { opacity: 0.7; }
-  }
-  /* FRONT */
+
+  /* FRONT FACE */
   .front-bg {
-    width: 100%; height: 100%;
-    background: linear-gradient(135deg, #0D0D0D 0%, #1A1A1A 50%, #0D0D0D 100%);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(0.8rem, 3vw, 1.5rem);
+    width: 100%; height: 100%; background: linear-gradient(135deg, #0D0D0D, #1A1A1A, #0D0D0D);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; position: relative;
   }
-  .front-bg::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(90deg, transparent 0px, transparent 2px, rgba(201,168,76,0.03) 2px, rgba(201,168,76,0.03) 3px);
-    pointer-events: none;
-  }
-  .corner {
-    position: absolute;
-    width: 18px; height: 18px;
-    border-color: var(--gold);
-    border-style: solid;
-    opacity: 0.5;
-  }
-  .corner-tl { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
-  .corner-tr { top: 8px; right: 8px; border-width: 1px 1px 0 0; }
-  .corner-bl { bottom: 8px; left: 8px; border-width: 0 0 1px 1px; }
-  .corner-br { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
-  /* Nueva clase para el escudo */
   .front-shield {
-    max-width: clamp(120px, 45vw, 180px); /* responsivo */
-    height: auto;
-    margin-bottom: 1.2rem; /* Más espacio con los elementos inferiores, ya que el escudo es alto */
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.4)); /* Brillo dorado suave */
+    max-width: clamp(110px, 38vw, 150px); /* Tamaño optimizado para no empujar el texto */
+    height: auto; margin-bottom: 0.6rem; filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.3));
   }
-  .front-logo {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1.8rem, 7vw, 3rem);
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 40%, var(--gold-light) 65%, var(--gold) 85%, var(--gold-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-    margin-bottom: 0.15em;
-  }
-  .front-subtitle {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.38rem, 1.4vw, 0.55rem);
-    font-weight: 300;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.75;
-    text-align: center;
-    margin-bottom: 0.8em;
-  }
-  .front-icon-row {
-    display: flex;
-    align-items: center;
-    gap: clamp(0.4rem, 1.5vw, 0.8rem);
-    margin-bottom: 0.7em;
-  }
-  .wave-bars { display: flex; align-items: center; gap: 2px; height: 28px; }
+  .front-icon-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.4rem; }
+  .wave-bars { display: flex; align-items: center; gap: 2px; height: 20px; }
   .wave-bars span {
-    display: block; width: 2px;
-    background: linear-gradient(to top, var(--gold-dark), var(--gold-light));
-    border-radius: 1px;
-    animation: wave-anim 1.4s ease-in-out infinite;
+    width: 2px; background: var(--gold); border-radius: 1px; animation: wave-anim 1.4s ease-in-out infinite;
   }
-  .wave-bars span:nth-child(1)  { height: 30%;  animation-delay: 0s; }
-  .wave-bars span:nth-child(2)  { height: 55%;  animation-delay: 0.1s; }
-  .wave-bars span:nth-child(3)  { height: 80%;  animation-delay: 0.2s; }
-  .wave-bars span:nth-child(4)  { height: 100%; animation-delay: 0.3s; }
-  .wave-bars span:nth-child(5)  { height: 70%;  animation-delay: 0.4s; }
-  .wave-bars span:nth-child(6)  { height: 45%;  animation-delay: 0.5s; }
-  .wave-bars span:nth-child(7)  { height: 65%;  animation-delay: 0.6s; }
-  .wave-bars span:nth-child(8)  { height: 90%;  animation-delay: 0.7s; }
-  .wave-bars span:nth-child(9)  { height: 60%;  animation-delay: 0.8s; }
-  .wave-bars span:nth-child(10) { height: 35%;  animation-delay: 0.9s; }
-  .wave-bars span:nth-child(11) { height: 20%;  animation-delay: 1.0s; }
-  @keyframes wave-anim {
-    0%, 100% { transform: scaleY(1);   opacity: 0.6; }
-    50%       { transform: scaleY(0.4); opacity: 1; }
-  }
-  .fingerprint-icon {
-    width: clamp(28px, 7vw, 40px);
-    height: clamp(28px, 7vw, 40px);
-    opacity: 0.85;
-    filter: drop-shadow(0 0 6px rgba(201,168,76,0.5));
-  }
-  .front-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1rem, 4vw, 1.6rem);
-    font-weight: 600;
-    color: var(--white);
-    letter-spacing: 0.06em;
-    text-align: center;
-    margin-bottom: 0.15em;
-  }
-  .front-tagline {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.42rem, 1.3vw, 0.58rem);
-    font-weight: 300;
-    color: var(--white-dim);
-    letter-spacing: 0.15em;
-    text-align: center;
-    font-style: italic;
-  }
-  /* BACK */
-  .back-bg {
-    width: 100%; height: 100%;
-    background: linear-gradient(135deg, #0D0D0D 0%, #1C1C1C 60%, #111111 100%);
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    padding: clamp(0.7rem, 2.5vw, 1.2rem);
-  }
-  .back-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-right: 0.8rem;
-  }
-  .back-title {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(0.55rem, 1.8vw, 0.75rem);
-    letter-spacing: 0.18em;
-    color: var(--gold);
-    margin-bottom: 0.5em;
-    border-bottom: 1px solid rgba(201,168,76,0.2);
-    padding-bottom: 0.3em;
-  }
-  .back-services { flex: 1; display: flex; flex-direction: column; gap: 0.35em; margin-bottom: 0.5em; }
-  .service-item { display: flex; align-items: flex-start; gap: 0.4em; }
-  .service-icon { font-size: clamp(0.6rem, 1.8vw, 0.8rem); line-height: 1.3; flex-shrink: 0; }
-  .service-text strong {
-    display: block;
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.38rem, 1.15vw, 0.52rem);
-    font-weight: 600;
-    color: var(--gold);
-    letter-spacing: 0.06em;
-  }
-  .service-text span {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.32rem, 1vw, 0.44rem);
-    font-weight: 300;
-    color: var(--white-dim);
-    line-height: 1.3;
-  }
-  .back-contact { border-top: 1px solid rgba(201,168,76,0.15); padding-top: 0.4em; }
-  .contact-line { display: flex; align-items: center; gap: 0.3em; margin-bottom: 0.2em; }
-  .contact-line .icon { font-size: clamp(0.5rem, 1.5vw, 0.65rem); opacity: 0.8; flex-shrink: 0; }
-  .contact-line a {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.3rem, 0.95vw, 0.42rem);
-    font-weight: 400;
-    color: var(--white-dim);
-    text-decoration: none;
-    transition: color 0.2s;
-    letter-spacing: 0.04em;
-  }
-  .contact-line a:hover { color: var(--gold-light); }
-  .back-right { display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
-  .qr-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.3rem, 0.9vw, 0.4rem);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.7;
-    text-align: center;
-    margin-bottom: 0.3em;
-  }
-  #qrcode-card {
-    background: var(--white);
-    padding: 4px;
-    border-radius: 4px;
-    border: 1px solid rgba(201,168,76,0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .back-url {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.28rem, 0.8vw, 0.36rem);
-    color: var(--gold);
-    opacity: 0.65;
-    text-align: center;
-    letter-spacing: 0.04em;
-    margin-top: 0.3em;
-    word-break: break-all;
-  }
-  .corner-g { position: absolute; width: 14px; height: 14px; border-color: var(--gold); border-style: solid; opacity: 0.4; }
-  .corner-g.tl { top: 6px; left: 6px; border-width: 1px 0 0 1px; }
-  .corner-g.tr { top: 6px; right: 6px; border-width: 1px 1px 0 0; }
-  .corner-g.bl { bottom: 6px; left: 6px; border-width: 0 0 1px 1px; }
-  .corner-g.br { bottom: 6px; right: 6px; border-width: 0 1px 1px 0; }
-  /* Actions */
-  .actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 1.2rem;
-    position: relative;
-    z-index: 10;
-  }
-  .action-btn { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; text-decoration: none; color: var(--white); transition: transform 0.2s, opacity 0.2s; }
-  .action-btn:hover { transform: translateY(-2px); opacity: 0.9; }
-  .action-icon {
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    box-shadow: 0 4px 16px rgba(201,168,76,0.3);
-  }
-  .action-label { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white-dim); }
-  /* Services */
-  .profile-section {
-    width: min(420px, 94vw);
-    margin: 1.5rem auto 0;
-    position: relative;
-    z-index: 10;
-    background: linear-gradient(135deg, rgba(201,168,76,0.04), rgba(201,168,76,0.01));
-    border: 1px solid rgba(201,168,76,0.12);
-    border-radius: 12px;
-    padding: 1.2rem 1.4rem;
-  }
-  .profile-section h2 {
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.8rem;
-    opacity: 0.8;
-  }
-  .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
-  .service-card {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(201,168,76,0.1);
-    border-radius: 8px;
-    padding: 0.7rem 0.8rem;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .service-card:hover { border-color: rgba(201,168,76,0.3); background: rgba(201,168,76,0.04); }
-  .service-card .sc-icon { font-size: 1.2rem; margin-bottom: 0.3rem; }
-  .service-card .sc-title { font-family: 'Montserrat', sans-serif; font-size: 0.58rem; font-weight: 600; color: var(--gold); letter-spacing: 0.05em; margin-bottom: 0.2rem; }
-  .service-card .sc-desc { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; font-weight: 300; color: var(--white-dim); line-height: 1.4; }
-  /* Catalog btn */
-  .catalog-btn {
-    display: block;
-    width: min(420px, 94vw);
-    margin: 1rem auto 0;
-    text-align: center;
-    text-decoration: none;
-    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-dark) 100%);
-    color: #0A0A0A;
-    font-family: 'Cinzel', serif;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    padding: 0.9rem 1rem;
-    border-radius: 8px;
-    position: relative;
-    z-index: 10;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(201,168,76,0.25);
-    background-size: 200% auto;
-  }
-  .catalog-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.4); background-position: right center; }
+  .wave-bars span:nth-child(odd) { height: 60%; animation-delay: 0.2s; }
+  .wave-bars span:nth-child(even) { height: 100%; animation-delay: 0.4s; }
+  @keyframes wave-anim { 0%, 100% { transform: scaleY(1); opacity: 0.5; } 50% { transform: scaleY(0.5); opacity: 1; } }
+  .fingerprint-icon { width: 30px; height: 30px; opacity: 0.8; }
+  
+  .front-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 5vw, 1.8rem); font-weight: 600; color: var(--white); letter-spacing: 0.05em; margin-bottom: 0.1rem; }
+  .front-tagline { font-size: clamp(0.4rem, 1.5vw, 0.55rem); font-weight: 300; color: var(--white-dim); letter-spacing: 0.12em; font-style: italic; }
 
-  /* ══ LEGAL SECTION ══ */
-  .legal-section {
-    width: min(420px, 94vw);
-    margin: 1.5rem auto 0;
-    position: relative;
-    z-index: 10;
-  }
-  .legal-section-title {
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.8;
-    text-align: center;
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(201,168,76,0.15);
-  }
-  .legal-demo-note {
-    text-align: center;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.52rem;
-    font-weight: 300;
-    color: var(--gold);
-    opacity: 0.6;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.8rem;
-    font-style: italic;
-  }
-  .legal-cards { display: flex; flex-direction: column; gap: 0.6rem; }
-  .legal-card {
-    background: rgba(201,168,76,0.02);
-    border: 1px solid rgba(201,168,76,0.1);
-    border-radius: 8px;
-    padding: 0.8rem 1rem;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .legal-card:hover { border-color: rgba(201,168,76,0.25); background: rgba(201,168,76,0.04); }
-  .legal-card-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; }
-  .legal-card-icon { font-size: 0.9rem; flex-shrink: 0; }
-  .legal-card-title { font-family: 'Montserrat', sans-serif; font-size: 0.58rem; font-weight: 600; color: var(--gold); letter-spacing: 0.06em; }
-  .legal-card-body { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; font-weight: 300; color: var(--white-dim); line-height: 1.65; padding-left: 1.4rem; }
+  /* BACK FACE */
+  .back-bg { width: 100%; height: 100%; background: #0D0D0D; display: grid; grid-template-columns: 1fr auto; padding: 1.2rem; }
+  .back-title { font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--gold); border-bottom: 1px solid rgba(201,168,76,0.2); margin-bottom: 0.5rem; padding-bottom: 0.3rem; }
+  .service-item { display: flex; gap: 0.5rem; margin-bottom: 0.4rem; }
+  .service-text strong { display: block; font-size: 0.5rem; color: var(--gold); }
+  .service-text span { font-size: 0.42rem; color: var(--white-dim); }
+  .contact-line { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.3rem; }
+  .contact-line a { font-size: 0.45rem; color: var(--white-dim); text-decoration: none; }
+  #qrcode-card { background: white; padding: 4px; border-radius: 4px; }
 
-  /* Footer */
-  .site-footer { margin-top: 2.5rem; text-align: center; position: relative; z-index: 10; }
-  .site-footer p { font-family: 'Montserrat', sans-serif; font-size: 0.48rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); opacity: 0.3; }
-
-  /* Animations */
-  .card-scene, .profile-section, .catalog-btn, .actions, .legal-section { animation: fadeUp 0.7s ease both; }
-  .profile-section { animation-delay: 0.15s; }
-  .catalog-btn     { animation-delay: 0.25s; }
-  .actions         { animation-delay: 0.1s; }
-  .legal-section   { animation-delay: 0.3s; }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  /* OTHER SECTIONS */
+  .actions { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+  .action-btn { text-decoration: none; text-align: center; color: var(--white-dim); font-size: 0.6rem; }
+  .action-icon { width: 50px; height: 50px; background: var(--gold-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.4rem; color: white; }
+  .catalog-btn { display: block; width: 90%; max-width: 420px; margin: 1.5rem auto; background: var(--gold); color: black; padding: 1rem; text-align: center; border-radius: 8px; font-family: 'Cinzel', serif; font-weight: 700; text-decoration: none; letter-spacing: 0.2em; }
+  .flip-hint { font-size: 0.6rem; color: var(--gold); opacity: 0.6; margin-top: 0.5rem; letter-spacing: 0.2em; }
 </style>
 </head>
 <body>
 
 <header class="site-header">
-  <div style="text-align:center;">
-    <div class="logo-wordmark">EAMR</div>
-    <div class="tagline-header">Estratega de Activos Musicales Registrables</div>
-  </div>
+  <div class="logo-wordmark">EAMR</div>
+  <div class="tagline-header">Estratega de Activos Musicales Registrables</div>
 </header>
 <div class="gold-divider"></div>
 
-<div class="card-scene" id="cardScene" onclick="toggleFlip()" title="Toca para girar">
+<div class="card-scene" id="cardScene" onclick="toggleFlip()">
   <div class="card-flip" id="cardFlip">
-
+    
     <div class="card-face">
       <div class="front-bg">
-        <div class="corner corner-tl"></div>
-        <div class="corner corner-tr"></div>
-        <div class="corner corner-bl"></div>
-        <div class="corner corner-br"></div>
         <img src="logo.png" alt="EAMR Shield" class="front-shield">
+        
         <div class="front-icon-row">
-          <div class="wave-bars"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="wave-bars"><span></span><span></span><span></span><span></span><span></span></div>
           <svg class="fingerprint-icon" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="30" cy="30" r="29" stroke="url(#gf)" stroke-width="0.8" opacity="0.3"/>
-            <path d="M30 8C18.954 8 10 16.954 10 28c0 8.837 7.163 16 16 16" stroke="url(#gf)" stroke-width="1.3" stroke-linecap="round" fill="none"/>
-            <path d="M30 13c-9.389 0-17 7.611-17 17 0 6.627 5.373 12 12 12" stroke="url(#gf)" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.8"/>
-            <path d="M30 18c-6.627 0-12 5.373-12 12 0 4.418 3.582 8 8 8" stroke="url(#gf)" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.7"/>
-            <path d="M30 23c-3.866 0-7 3.134-7 7 0 2.209 1.791 4 4 4" stroke="url(#gf)" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.6"/>
-            <circle cx="30" cy="30" r="2" fill="url(#gf)" opacity="0.9"/>
-            <defs>
-              <linearGradient id="gf" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#8B6914"/><stop offset="0.4" stop-color="#C9A84C"/>
-                <stop offset="0.65" stop-color="#E8C97A"/><stop offset="1" stop-color="#8B6914"/>
-              </linearGradient>
-            </defs>
+            <circle cx="30" cy="30" r="28" stroke="url(#gf)" stroke-width="1" opacity="0.4"/>
+            <path d="M20 30 Q30 10 40 30" stroke="url(#gf)" stroke-width="1.5" fill="none"/>
+            <defs><linearGradient id="gf"><stop stop-color="#8B6914"/><stop offset="1" stop-color="#E8C97A"/></linearGradient></defs>
           </svg>
-          <div class="wave-bars" style="transform:scaleX(-1)"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="wave-bars"><span></span><span></span><span></span><span></span><span></span></div>
         </div>
+        
         <div class="front-name">Edgar Romero</div>
         <div class="front-tagline">Tu historia, nuestra ciencia. Emoción real al instante.</div>
       </div>
@@ -527,138 +110,50 @@
 
     <div class="card-face card-back">
       <div class="back-bg">
-        <div class="corner-g tl"></div><div class="corner-g tr"></div>
-        <div class="corner-g bl"></div><div class="corner-g br"></div>
         <div class="back-left">
-          <div>
-            <div class="back-title">Escanea y guarda mi contacto</div>
-            <div class="back-services">
-              <div class="service-item">
-                <div class="service-icon">⚙️🎵</div>
-                <div class="service-text"><strong>Personalización Total:</strong><span>Texto, estilo, instrumentación. Tú decides.</span></div>
-              </div>
-              <div class="service-item">
-                <div class="service-icon">🎙️⭐</div>
-                <div class="service-text"><strong>Calidad de Estudio:</strong><span>Sonido profesional sin costos excesivos.</span></div>
-              </div>
-              <div class="service-item">
-                <div class="service-icon">🔒🌐</div>
-                <div class="service-text"><strong>Propiedad Total &amp; Seguridad:</strong><span>Eres el dueño legal absoluto de tu canción. Si deseas los derechos totales debes solicitarlo.</span></div>
-              </div>
-            </div>
+          <div class="back-title">Contacto & Servicios</div>
+          <div class="service-item">
+            <div class="service-text"><strong>Personalización Total</strong><span>Texto, estilo e instrumentación a medida.</span></div>
           </div>
-          <div class="back-contact">
-            <div class="contact-line"><span class="icon">📱</span><a href="tel:3343215254">3343215254</a></div>
-            <div class="contact-line"><span class="icon">📧</span><a href="mailto:eamr_33@proton.me">eamr_33@proton.me</a></div>
-            <div class="contact-line"><span class="icon">📷</span><a href="https://instagram.com/eamr" target="_blank">@eamr</a></div>
+          <div class="service-item">
+            <div class="service-text"><strong>Propiedad Garantizada</strong><span>Eres el dueño legal de tu creación.</span></div>
           </div>
+          <div class="contact-line"><span>📞</span><a href="tel:3343215254">3343215254</a></div>
+          <div class="contact-line"><span>📧</span><a href="mailto:eamr_33@proton.me">eamr_33@proton.me</a></div>
         </div>
         <div class="back-right">
-          <div class="qr-label">Escanea</div>
           <div id="qrcode-card"></div>
-          <div class="back-url">edheller33.github.io/Music_dem/</div>
+          <div style="font-size:0.35rem; color:var(--gold); margin-top:0.5rem; text-align:center;">SCAN ME</div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
-<p class="flip-hint">↺ toca la tarjeta para girar</p>
+<p class="flip-hint">↺ toca para girar</p>
 
 <div class="actions">
-  <a href="tel:3343215254" class="action-btn"><div class="action-icon">📞</div><span class="action-label">Llamar</span></a>
-  <a href="https://wa.me/523343215254" target="_blank" class="action-btn"><div class="action-icon">💬</div><span class="action-label">WhatsApp</span></a>
-  <a href="mailto:eamr_33@proton.me" class="action-btn"><div class="action-icon">✉️</div><span class="action-label">Email</span></a>
-  <a href="https://instagram.com/eamr" target="_blank" class="action-btn"><div class="action-icon">📷</div><span class="action-label">Instagram</span></a>
+  <a href="https://wa.me/523343215254" class="action-btn"><div class="action-icon">💬</div><span>WhatsApp</span></a>
+  <a href="tel:3343215254" class="action-btn"><div class="action-icon">📞</div><span>Llamar</span></a>
+  <a href="mailto:eamr_33@proton.me" class="action-btn"><div class="action-icon">✉️</div><span>Email</span></a>
 </div>
 
-<section class="profile-section">
-  <h2>Servicios</h2>
-  <div class="services-grid">
-    <div class="service-card"><div class="sc-icon">🎶</div><div class="sc-title">Composición IA</div><div class="sc-desc">Canciones únicas generadas con IA de calidad profesional, 100% originales.</div></div>
-    <div class="service-card"><div class="sc-icon">📝</div><div class="sc-title">Letras Personalizadas</div><div class="sc-desc">Tu historia, tu mensaje. Letras que conectan con quien más quieres.</div></div>
-    <div class="service-card"><div class="sc-icon">🎼</div><div class="sc-title">Estilo a tu Medida</div><div class="sc-desc">Desde balada hasta corrido, norteño, pop o rock. Tú eliges el género.</div></div>
-    <div class="service-card"><div class="sc-icon">🔐</div><div class="sc-title">Derechos </div><div class="sc-desc"> Si eliges la modalidad gratuita, eres el propietario legal, pero para uso unicamente personal.</div></div>
-  </div>
-</section>
+<a href="https://edheller33.github.io/Music_dem/" class="catalog-btn">VER CATÁLOGO MUSICAL</a>
 
-<a href="https://edheller33.github.io/Music_dem/" target="_blank" class="catalog-btn">
-  🎵 Ver Catálogo Musical
-</a>
-
-<section class="legal-section">
-  <div class="legal-section-title">Licencia &amp; Derechos</div>
-  <p class="legal-demo-note">Demo gratuita — licencia comercial disponible bajo solicitud.</p>
-  <div class="legal-cards">
-
-    <div class="legal-card">
-      <div class="legal-card-header">
-        <span class="legal-card-icon">🎧</span>
-        <span class="legal-card-title">Uso de Demo</span>
-      </div>
-      <p class="legal-card-body">Las canciones disponibles en esta plataforma son demos destinadas exclusivamente para uso personal. No incluyen derechos de uso comercial, distribución, monetización ni registro legal.</p>
-    </div>
-
-    <div class="legal-card">
-      <div class="legal-card-header">
-        <span class="legal-card-icon">⚠️</span>
-        <span class="legal-card-title">Naturaleza del Contenido</span>
-      </div>
-      <p class="legal-card-body">Algunas composiciones pueden haber sido generadas o asistidas por inteligencia artificial. Las versiones finales pueden variar y no se garantiza la replicación exacta de la demo.</p>
-    </div>
-
-    <div class="legal-card">
-      <div class="legal-card-header">
-        <span class="legal-card-icon">💼</span>
-        <span class="legal-card-title">Licencia Comercial</span>
-      </div>
-      <p class="legal-card-body">Puedes solicitar una versión profesional de la obra mediante contratación. La licencia puede incluir derechos de uso comercial, reproducción, distribución y explotación, según los términos acordados.</p>
-    </div>
-
-    <div class="legal-card">
-      <div class="legal-card-header">
-        <span class="legal-card-icon">👑</span>
-        <span class="legal-card-title">Derechos y Propiedad</span>
-      </div>
-      <p class="legal-card-body">Los derechos sobre la obra final serán definidos en el acuerdo de licencia. La cesión total de derechos no es automática y debe establecerse explícitamente por escrito.</p>
-    </div>
-
-    <div class="legal-card">
-      <div class="legal-card-header">
-        <span class="legal-card-icon">🚫</span>
-        <span class="legal-card-title">Restricciones</span>
-      </div>
-      <p class="legal-card-body">Queda prohibido el uso comercial, redistribución, registro o explotación de las demos sin autorización previa y por escrito de EAMR.</p>
-    </div>
-
-  </div>
-</section>
-
-<footer class="site-footer">
-  <p>© 2026 EAMR – Edgar Romero · Tu historia, nuestra ciencia</p>
+<footer style="margin-top:2rem; opacity:0.3; font-size:0.5rem; letter-spacing:0.2em;">
+  © 2026 EAMR – EDGAR ROMERO
 </footer>
 
 <script>
-  function toggleFlip() {
-    document.getElementById('cardScene').classList.toggle('flipped');
-  }
+  function toggleFlip() { document.getElementById('cardScene').classList.toggle('flipped'); }
   window.addEventListener('DOMContentLoaded', () => {
-    const qrContainer = document.getElementById('qrcode-card');
-    const size = Math.min(window.innerWidth * 0.16, 75);
-    try {
-      new QRCode(qrContainer, {
-        text: 'https://edheller33.github.io/Music_dem/',
-        width:  Math.round(size),
-        height: Math.round(size),
-        colorDark:  '#0A0A0A',
-        colorLight: '#F5F0E8',
-        correctLevel: QRCode.CorrectLevel.H
-      });
-    } catch(e) {
-      qrContainer.innerHTML = '<div style="font-size:0.4rem;color:#C9A84C;text-align:center;padding:4px;">QR<br>disponible</div>';
-    }
+    new QRCode(document.getElementById('qrcode-card'), {
+      text: 'https://edheller33.github.io/Music_dem/',
+      width: 70, height: 70,
+      colorDark: '#0A0A0A', colorLight: '#FFFFFF'
+    });
   });
 </script>
 </body>
 </html>
+
