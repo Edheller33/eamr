@@ -6,7 +6,7 @@
 <title>EAMR – Edgar Romero | Estratega de Activos Musicales Registrables</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;600&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
   :root {
@@ -19,63 +19,68 @@
     align-items: center; font-family: 'Montserrat', sans-serif; color: var(--white);
     overflow-x: hidden; padding-bottom: 3rem;
   }
+  
   /* HEADER */
-  .site-header { width: 100%; padding: 2rem 1rem 1rem; text-align: center; position: relative; z-index: 10; }
+  .site-header { width: 100%; padding: 1.5rem 1rem 0.5rem; text-align: center; position: relative; z-index: 10; }
   .logo-wordmark {
-    font-family: 'Cinzel', serif; font-size: clamp(2.2rem, 8vw, 3.8rem); font-weight: 700;
+    font-family: 'Cinzel', serif; font-size: clamp(2rem, 7vw, 3.5rem); font-weight: 700;
     letter-spacing: 0.18em; background: linear-gradient(135deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shimmer 4s infinite;
   }
   @keyframes shimmer { 0% { background-position: 0% center; } 50% { background-position: 100% center; } 100% { background-position: 0% center; } }
-  .tagline-header { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-top: 0.25rem; }
-  .gold-divider { width: min(320px, 80vw); height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1rem auto; position: relative; }
-  .gold-divider::before { content: '◆'; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--gold); font-size: 0.55rem; background: #080808; padding: 0 0.4rem; }
+  .tagline-header { font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-top: 0.2rem; }
 
   /* CARD SCENE */
-  .card-scene { width: min(420px, 94vw); aspect-ratio: 1.75 / 1; perspective: 1200px; margin: 1rem auto; cursor: pointer; position: relative; z-index: 10; }
+  .card-scene { width: min(450px, 94vw); aspect-ratio: 1.75 / 1; perspective: 1200px; margin: 1rem auto; cursor: pointer; position: relative; z-index: 10; }
   .card-flip { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1); }
   .card-scene.flipped .card-flip { transform: rotateY(180deg); }
-  .card-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.8), 0 0 0 1px rgba(201,168,76,0.25); }
+  .card-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.9), 0 0 0 1px rgba(201,168,76,0.3); }
   .card-back { transform: rotateY(180deg); }
 
-  /* FRONT FACE */
+  /* FRONT FACE - LAYOUT HORIZONTAL VERIFICADO */
   .front-bg {
     width: 100%; height: 100%; background: linear-gradient(135deg, #0D0D0D, #1A1A1A, #0D0D0D);
-    display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; position: relative;
+    display: flex; align-items: center; padding: 1.5rem; position: relative;
   }
-  .front-shield {
-    max-width: clamp(110px, 38vw, 150px); /* Tamaño optimizado para no empujar el texto */
-    height: auto; margin-bottom: 0.6rem; filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.3));
+  .front-content-wrapper {
+    display: flex; flex-direction: row; /* Asegura layout horizontal */
+    align-items: center; width: 100%; gap: 1rem; z-index: 5;
   }
-  .front-icon-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.4rem; }
-  .wave-bars { display: flex; align-items: center; gap: 2px; height: 20px; }
-  .wave-bars span {
-    width: 2px; background: var(--gold); border-radius: 1px; animation: wave-anim 1.4s ease-in-out infinite;
-  }
-  .wave-bars span:nth-child(odd) { height: 60%; animation-delay: 0.2s; }
-  .wave-bars span:nth-child(even) { height: 100%; animation-delay: 0.4s; }
-  @keyframes wave-anim { 0%, 100% { transform: scaleY(1); opacity: 0.5; } 50% { transform: scaleY(0.5); opacity: 1; } }
-  .fingerprint-icon { width: 30px; height: 30px; opacity: 0.8; }
+  .front-left { flex: 0 0 35%; display: flex; align-items: center; justify-content: center; }
+  .front-shield { width: 100%; max-width: 130px; height: auto; filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.4)); }
+
+  .front-right { flex: 1; display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
+  .front-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 5vw, 1.8rem); font-weight: 700; color: var(--white); margin-bottom: 0.2rem; }
   
-  .front-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 5vw, 1.8rem); font-weight: 600; color: var(--white); letter-spacing: 0.05em; margin-bottom: 0.1rem; }
-  .front-tagline { font-size: clamp(0.4rem, 1.5vw, 0.55rem); font-weight: 300; color: var(--white-dim); letter-spacing: 0.12em; font-style: italic; }
+  .front-icon-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+  .wave-bars { display: flex; align-items: center; gap: 2px; height: 14px; }
+  .wave-bars span { width: 2px; background: var(--gold); border-radius: 1px; animation: wave-anim 1.2s ease-in-out infinite; }
+  .wave-bars span:nth-child(1) { height: 40%; animation-delay: 0.1s; }
+  .wave-bars span:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+  .wave-bars span:nth-child(3) { height: 60%; animation-delay: 0.5s; }
+  @keyframes wave-anim { 0%, 100% { transform: scaleY(1); opacity: 0.4; } 50% { transform: scaleY(0.5); opacity: 1; } }
+  
+  .front-tagline { font-size: 0.55rem; color: var(--white-dim); font-style: italic; border-left: 1px solid var(--gold); padding-left: 0.5rem; }
 
-  /* BACK FACE */
-  .back-bg { width: 100%; height: 100%; background: #0D0D0D; display: grid; grid-template-columns: 1fr auto; padding: 1.2rem; }
-  .back-title { font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--gold); border-bottom: 1px solid rgba(201,168,76,0.2); margin-bottom: 0.5rem; padding-bottom: 0.3rem; }
-  .service-item { display: flex; gap: 0.5rem; margin-bottom: 0.4rem; }
-  .service-text strong { display: block; font-size: 0.5rem; color: var(--gold); }
-  .service-text span { font-size: 0.42rem; color: var(--white-dim); }
-  .contact-line { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.3rem; }
-  .contact-line a { font-size: 0.45rem; color: var(--white-dim); text-decoration: none; }
-  #qrcode-card { background: white; padding: 4px; border-radius: 4px; }
+  /* PRICING SECTION */
+  .pricing-section { width: min(450px, 94vw); margin-top: 2rem; position: relative; z-index: 10; }
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+  .price-card {
+    background: rgba(201,168,76,0.03); border: 1px solid rgba(201,168,76,0.15); border-radius: 12px;
+    padding: 1.2rem 0.8rem; text-align: center; transition: 0.3s;
+  }
+  .price-card.featured { border-color: var(--gold); background: rgba(201,168,76,0.06); transform: translateY(-5px); }
+  .price-title { font-family: 'Cinzel', serif; font-size: 0.55rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+  .price-amount { font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; color: var(--white); }
+  .price-amount span { font-size: 0.6rem; opacity: 0.6; }
+  .price-features { list-style: none; text-align: left; margin-bottom: 1rem; }
+  .price-features li { font-size: 0.48rem; color: var(--white-dim); margin-bottom: 0.4rem; display: flex; align-items: flex-start; gap: 0.3rem; }
+  .price-features li::before { content: '✓'; color: var(--gold); font-weight: bold; }
 
-  /* OTHER SECTIONS */
-  .actions { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
-  .action-btn { text-decoration: none; text-align: center; color: var(--white-dim); font-size: 0.6rem; }
-  .action-icon { width: 50px; height: 50px; background: var(--gold-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.4rem; color: white; }
-  .catalog-btn { display: block; width: 90%; max-width: 420px; margin: 1.5rem auto; background: var(--gold); color: black; padding: 1rem; text-align: center; border-radius: 8px; font-family: 'Cinzel', serif; font-weight: 700; text-decoration: none; letter-spacing: 0.2em; }
-  .flip-hint { font-size: 0.6rem; color: var(--gold); opacity: 0.6; margin-top: 0.5rem; letter-spacing: 0.2em; }
+  /* BUTTONS & FOOTER */
+  .actions { display: flex; gap: 1rem; justify-content: center; margin: 1.5rem 0; }
+  .action-icon { width: 45px; height: 45px; background: var(--gold-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: 0.3rem; }
+  .catalog-btn { display: block; width: 90%; max-width: 450px; background: var(--gold); color: black; padding: 0.9rem; text-align: center; border-radius: 8px; font-family: 'Cinzel'; font-weight: 700; text-decoration: none; margin: 0 auto; }
 </style>
 </head>
 <body>
@@ -84,76 +89,94 @@
   <div class="logo-wordmark">EAMR</div>
   <div class="tagline-header">Estratega de Activos Musicales Registrables</div>
 </header>
-<div class="gold-divider"></div>
 
-<div class="card-scene" id="cardScene" onclick="toggleFlip()">
+<div class="card-scene" onclick="toggleFlip()">
   <div class="card-flip" id="cardFlip">
-    
     <div class="card-face">
       <div class="front-bg">
-        <img src="logo.png" alt="EAMR Shield" class="front-shield">
-        
-        <div class="front-icon-row">
-          <div class="wave-bars"><span></span><span></span><span></span><span></span><span></span></div>
-          <svg class="fingerprint-icon" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="30" cy="30" r="28" stroke="url(#gf)" stroke-width="1" opacity="0.4"/>
-            <path d="M20 30 Q30 10 40 30" stroke="url(#gf)" stroke-width="1.5" fill="none"/>
-            <defs><linearGradient id="gf"><stop stop-color="#8B6914"/><stop offset="1" stop-color="#E8C97A"/></linearGradient></defs>
-          </svg>
-          <div class="wave-bars"><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="front-content-wrapper">
+          <div class="front-left">
+            <img src="logo.png" alt="EAMR Shield" class="front-shield">
+          </div>
+          <div class="front-right">
+            <div class="front-name">Edgar Romero</div>
+            <div class="front-icon-row">
+              <div class="wave-bars"><span></span><span></span><span></span><span></span><span></span></div>
+              <span>🎵</span>
+              <div class="wave-bars"><span></span><span></span><span></span><span></span><span></span></div>
+            </div>
+            <div class="front-tagline">Tu historia, nuestra ciencia.<br>Emoción real al instante.</div>
+          </div>
         </div>
-        
-        <div class="front-name">Edgar Romero</div>
-        <div class="front-tagline">Tu historia, nuestra ciencia. Emoción real al instante.</div>
       </div>
     </div>
-
     <div class="card-face card-back">
-      <div class="back-bg">
-        <div class="back-left">
-          <div class="back-title">Contacto & Servicios</div>
-          <div class="service-item">
-            <div class="service-text"><strong>Personalización Total</strong><span>Texto, estilo e instrumentación a medida.</span></div>
-          </div>
-          <div class="service-item">
-            <div class="service-text"><strong>Propiedad Garantizada</strong><span>Eres el dueño legal de tu creación.</span></div>
-          </div>
-          <div class="contact-line"><span>📞</span><a href="tel:3343215254">3343215254</a></div>
-          <div class="contact-line"><span>📧</span><a href="mailto:eamr_33@proton.me">eamr_33@proton.me</a></div>
+      <div style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; height: 100%; background: #0D0D0D;">
+        <div style="text-align: left;">
+          <p style="font-family: 'Cinzel'; color: var(--gold); font-size: 0.7rem;">Contacto Directo</p>
+          <p style="font-size: 0.5rem; margin-top: 0.5rem; color: var(--white-dim);">Zapopan, Jalisco, MX</p>
+          <p style="font-size: 0.6rem; margin-top: 1rem;">📞 3343215254</p>
         </div>
-        <div class="back-right">
-          <div id="qrcode-card"></div>
-          <div style="font-size:0.35rem; color:var(--gold); margin-top:0.5rem; text-align:center;">SCAN ME</div>
-        </div>
+        <div id="qrcode-card"></div>
       </div>
     </div>
   </div>
 </div>
 
-<p class="flip-hint">↺ toca para girar</p>
+<section class="pricing-section">
+  <h2 style="font-family: 'Cinzel'; font-size: 0.7rem; text-align: center; color: var(--gold); letter-spacing: 0.2em;">Inversión por Activo</h2>
+  <div class="pricing-grid">
+    
+    <div class="price-card">
+      <p class="price-title">Unicornio Sónico</p>
+      <p class="price-amount">$0 <span>USD / Demo</span></p>
+      <ul class="price-features">
+        <li>Composición IA Personalizada</li>
+        <li>Uso Estrictamente Personal</li>
+        <li>Calidad Estándar (MP3)</li>
+        <li>Sin Registro de Propiedad</li>
+        <li>Atribución EAMR Requerida</li>
+      </ul>
+    </div>
+
+    <div class="price-card featured">
+      <p class="price-title">Versión Premium</p>
+      <p class="price-amount">$89 <span>USD / Activo</span></p>
+      <ul class="price-features">
+        <li>Mastering Profesional (WAV)</li>
+        <li><strong>Licencia Comercial Total</strong></li>
+        <li>Registro en Blockchain/Digital</li>
+        <li>Entrega de Stems (Instrumental)</li>
+        <li>Sin Atribución (Marca Blanca)</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
 
 <div class="actions">
-  <a href="https://wa.me/523343215254" class="action-btn"><div class="action-icon">💬</div><span>WhatsApp</span></a>
-  <a href="tel:3343215254" class="action-btn"><div class="action-icon">📞</div><span>Llamar</span></a>
-  <a href="mailto:eamr_33@proton.me" class="action-btn"><div class="action-icon">✉️</div><span>Email</span></a>
+  <a href="https://wa.me/523343215254" class="action-btn" style="text-decoration: none; color: inherit; text-align: center;">
+    <div class="action-icon">💬</div><span style="font-size: 0.5rem;">WhatsApp</span>
+  </a>
+  <a href="tel:3343215254" class="action-btn" style="text-decoration: none; color: inherit; text-align: center;">
+    <div class="action-icon">📞</div><span style="font-size: 0.5rem;">Llamar</span>
+  </a>
 </div>
 
 <a href="https://edheller33.github.io/Music_dem/" class="catalog-btn">VER CATÁLOGO MUSICAL</a>
 
-<footer style="margin-top:2rem; opacity:0.3; font-size:0.5rem; letter-spacing:0.2em;">
-  © 2026 EAMR – EDGAR ROMERO
+<footer style="margin-top: 3rem; text-align: center; opacity: 0.4; font-size: 0.5rem;">
+  © 2026 EAMR – EDGAR ROMERO | ESTRATEGA MUSICAL
 </footer>
 
 <script>
-  function toggleFlip() { document.getElementById('cardScene').classList.toggle('flipped'); }
+  function toggleFlip() { document.getElementById('cardFlip').parentElement.classList.toggle('flipped'); }
   window.addEventListener('DOMContentLoaded', () => {
     new QRCode(document.getElementById('qrcode-card'), {
       text: 'https://edheller33.github.io/Music_dem/',
-      width: 70, height: 70,
-      colorDark: '#0A0A0A', colorLight: '#FFFFFF'
+      width: 75, height: 75, colorDark: '#0A0A0A', colorLight: '#FFFFFF'
     });
   });
 </script>
 </body>
 </html>
-
