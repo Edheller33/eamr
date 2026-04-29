@@ -1,199 +1,356 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EAMR – Edgar Romero | Estratega de Activos Musicales Registrables</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;600&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<style>
-  :root {
-    --gold: #C9A84C; --gold-light: #E8C97A; --gold-dark: #8B6914;
-    --black: #0A0A0A; --white: #F5F0E8; --white-dim: #B8B0A0;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: #080808; min-height: 100vh; display: flex; flex-direction: column;
-    align-items: center; font-family: 'Montserrat', sans-serif; color: var(--white);
-    overflow-x: hidden; padding-bottom: 3rem;
-  }
-  
-  /* HEADER */
-  .site-header { width: 100%; padding: 1.5rem 1rem 0.5rem; text-align: center; position: relative; z-index: 10; }
-  .logo-wordmark {
-    font-family: 'Cinzel', serif; font-size: clamp(2rem, 7vw, 3.5rem); font-weight: 700;
-    letter-spacing: 0.18em; background: linear-gradient(135deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shimmer 4s infinite;
-  }
-  @keyframes shimmer { 0% { background-position: 0% center; } 50% { background-position: 100% center; } 100% { background-position: 0% center; } }
-  .tagline-header { font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-top: 0.2rem; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EAMR â€“ Edgar Romero | Estratega de Activos Musicales Registrables</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* CARD SCENE */
-  .card-scene { width: min(450px, 94vw); aspect-ratio: 1.75 / 1; perspective: 1200px; margin: 1rem auto; cursor: pointer; position: relative; z-index: 10; }
-  .card-flip { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1); }
-  .card-scene.flipped .card-flip { transform: rotateY(180deg); }
-  .card-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.9), 0 0 0 1px rgba(201,168,76,0.3); }
-  .card-back { transform: rotateY(180deg); }
+    :root {
+      --gold:        #c9a84c;
+      --gold-light:  #e8c97a;
+      --gold-dark:   #8a6a20;
+      --bg:          #0a0a0a;
+      --surface:     #111111;
+      --surface2:    #161616;
+      --border:      rgba(201,168,76,.25);
+      --text:        #e8dcc8;
+      --text-muted:  #9a8a6a;
+    }
 
-  /* FRONT FACE - LAYOUT HORIZONTAL VERIFICADO */
-  .front-bg {
-    width: 100%; height: 100%; background: linear-gradient(135deg, #0D0D0D, #1A1A1A, #0D0D0D);
-    display: flex; align-items: center; padding: 1.5rem; position: relative;
-  }
-  .front-content-wrapper {
-    display: flex; flex-direction: row; /* Asegura layout horizontal */
-    align-items: center; width: 100%; gap: 1rem; z-index: 5;
-  }
-  .front-left { flex: 0 0 35%; display: flex; align-items: center; justify-content: center; }
-  .front-shield { width: 100%; max-width: 130px; height: auto; filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.4)); }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  .front-right { flex: 1; display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
-  .front-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 5vw, 1.8rem); font-weight: 700; color: var(--white); margin-bottom: 0.2rem; }
-  
-  .front-icon-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
-  .wave-bars { display: flex; align-items: center; gap: 2px; height: 14px; }
-  .wave-bars span { width: 2px; background: var(--gold); border-radius: 1px; animation: wave-anim 1.2s ease-in-out infinite; }
-  .wave-bars span:nth-child(1) { height: 40%; animation-delay: 0.1s; }
-  .wave-bars span:nth-child(2) { height: 100%; animation-delay: 0.3s; }
-  .wave-bars span:nth-child(3) { height: 60%; animation-delay: 0.5s; }
-  @keyframes wave-anim { 0%, 100% { transform: scaleY(1); opacity: 0.4; } 50% { transform: scaleY(0.5); opacity: 1; } }
-  
-  .front-tagline { font-size: 0.55rem; color: var(--white-dim); font-style: italic; border-left: 1px solid var(--gold); padding-left: 0.5rem; }
+    /* â”€â”€ HEADER â”€â”€ */
+    header {
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.8rem, 10vw, 5rem);
+      letter-spacing: .35em;
+      color: var(--gold);
+      text-shadow: 0 0 40px rgba(201,168,76,.3);
+    }
+    header p {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(.55rem, 2.2vw, .75rem);
+      letter-spacing: .28em;
+      color: var(--text-muted);
+      margin-top: .6rem;
+      text-transform: uppercase;
+    }
 
-  /* PRICING SECTION */
-  .pricing-section { width: min(450px, 94vw); margin-top: 2rem; position: relative; z-index: 10; }
-  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
-  .price-card {
-    background: rgba(201,168,76,0.03); border: 1px solid rgba(201,168,76,0.15); border-radius: 12px;
-    padding: 1.2rem 0.8rem; text-align: center; transition: 0.3s;
-  }
-  .price-card.featured { border-color: var(--gold); background: rgba(201,168,76,0.06); transform: translateY(-5px); }
-  .price-title { font-family: 'Cinzel', serif; font-size: 0.55rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
-  .price-amount { font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; color: var(--white); }
-  .price-amount span { font-size: 0.6rem; opacity: 0.6; }
-  .price-features { list-style: none; text-align: left; margin-bottom: 1rem; }
-  .price-features li { font-size: 0.48rem; color: var(--white-dim); margin-bottom: 0.4rem; display: flex; align-items: flex-start; gap: 0.3rem; }
-  .price-features li::before { content: '✓'; color: var(--gold); font-weight: bold; }
+    /* â”€â”€ HERO CARD â”€â”€ */
+    .hero {
+      max-width: 760px;
+      margin: 2.5rem auto;
+      padding: 0 1.25rem;
+    }
+    .hero-card {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      box-shadow: 0 0 60px rgba(201,168,76,.07);
+    }
 
-  /* BUTTONS & FOOTER */
-  .actions { display: flex; gap: 1rem; justify-content: center; margin: 1.5rem 0; }
-  .action-icon { width: 45px; height: 45px; background: var(--gold-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: 0.3rem; }
-  .catalog-btn { display: block; width: 90%; max-width: 450px; background: var(--gold); color: black; padding: 0.9rem; text-align: center; border-radius: 8px; font-family: 'Cinzel'; font-weight: 700; text-decoration: none; margin: 0 auto; }
-</style>
+    /* LOGO: mix-blend-mode:screen elimina visualmente el fondo negro del PNG */
+    .hero-logo {
+      flex-shrink: 0;
+      width: clamp(110px, 28vw, 160px);
+      aspect-ratio: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      mix-blend-mode: screen;
+      display: block;
+    }
+
+    /* INFO: centrado horizontal y vertical */
+    .hero-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: .55rem;
+    }
+    .hero-info h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.3rem, 5vw, 2rem);
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: .05em;
+    }
+    .hero-icons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .65rem;
+      color: var(--gold);
+      font-size: 1.05rem;
+      opacity: .85;
+    }
+    .hero-tagline {
+      font-size: clamp(.88rem, 2.5vw, 1.05rem);
+      font-style: italic;
+      color: var(--text-muted);
+      border-left: 2px solid var(--gold-dark);
+      padding-left: .8rem;
+      line-height: 1.65;
+      text-align: left;
+    }
+    .hero-contact {
+      font-size: .78rem;
+      color: var(--text-muted);
+      letter-spacing: .04em;
+      margin-top: .15rem;
+    }
+    .hero-contact span { color: var(--gold); margin-right: .3rem; }
+
+    /* â”€â”€ PRICING â”€â”€ */
+    .section-title {
+      font-family: 'Cinzel', serif;
+      text-align: center;
+      font-size: clamp(.85rem, 3vw, 1.05rem);
+      letter-spacing: .3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin: 2.5rem 0 1.5rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+      gap: 1.25rem;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.25rem 2.5rem;
+    }
+
+    .plan {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      transition: box-shadow .25s, border-color .25s;
+    }
+    .plan:hover {
+      border-color: var(--gold-dark);
+      box-shadow: 0 0 30px rgba(201,168,76,.12);
+    }
+    .plan-name {
+      font-family: 'Cinzel', serif;
+      font-size: .7rem;
+      letter-spacing: .15em;
+      color: var(--gold);
+      text-transform: uppercase;
+      line-height: 1.5;
+    }
+    .plan-price {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 5vw, 2rem);
+      color: var(--text);
+    }
+    .plan-price sub {
+      font-size: .6em;
+      color: var(--text-muted);
+      vertical-align: baseline;
+    }
+    .plan-period {
+      font-size: .75rem;
+      color: var(--text-muted);
+      margin-top: -.4rem;
+    }
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+      flex: 1;
+    }
+    .plan-features li {
+      font-size: .82rem;
+      color: var(--text-muted);
+      padding-left: 1.1rem;
+      position: relative;
+      line-height: 1.45;
+    }
+    .plan-features li::before {
+      content: 'âœ“';
+      position: absolute;
+      left: 0;
+      color: var(--gold-dark);
+      font-size: .75rem;
+    }
+    .plan-features li strong { color: var(--text); font-weight: 600; }
+
+    /* â”€â”€ CTA â”€â”€ */
+    .cta-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 1.25rem 3rem;
+    }
+    .btn-row { display: flex; gap: .9rem; flex-wrap: wrap; justify-content: center; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: 'Cinzel', serif;
+      font-size: .73rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .75rem 1.6rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background .2s, color .2s, box-shadow .2s;
+    }
+    .btn-primary { background: var(--gold); color: #0a0a0a; font-weight: 700; }
+    .btn-primary:hover { background: var(--gold-light); box-shadow: 0 0 20px rgba(201,168,76,.4); }
+    .btn-outline { background: transparent; color: var(--gold); border: 1px solid var(--gold-dark); }
+    .btn-outline:hover { background: rgba(201,168,76,.08); }
+    .btn-catalog { background: transparent; color: var(--text-muted); border: 1px solid var(--border); letter-spacing: .18em; }
+    .btn-catalog:hover { color: var(--gold); border-color: var(--gold-dark); }
+
+    /* â”€â”€ FOOTER â”€â”€ */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-family: 'Cinzel', serif;
+      font-size: .6rem;
+      letter-spacing: .2em;
+      color: var(--text-muted);
+    }
+
+    /* â”€â”€ RESPONSIVE â”€â”€ */
+    @media (max-width: 480px) {
+      .hero-card { flex-direction: column; }
+      .hero-tagline { border-left: none; border-top: 2px solid var(--gold-dark); padding: .5rem 0 0; text-align: center; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="logo-wordmark">EAMR</div>
-  <div class="tagline-header">Estratega de Activos Musicales Registrables</div>
-</header>
+  <header>
+    <h1>EAMR</h1>
+    <p>Estratega de Activos Musicales Registrables</p>
+  </header>
 
-<div class="card-scene" onclick="toggleFlip()">
-  <div class="card-flip" id="cardFlip">
-    <div class="card-face">
-      <div class="front-bg">
-        <div class="front-content-wrapper">
-          <div class="front-left">
-            <img src="logo.png" alt="EAMR Shield" class="front-shield">
-          </div>
-          <div class="front-right">
-            <div class="front-name">Edgar Romero</div>
-            <div class="front-icon-row">
-              <div class="wave-bars"><span></span><span></span><span></span><span></span><span></span></div>
-              <span>🎵</span>
-              <div class="wave-bars"><span></span><span></span><span></span><span></span><span></span></div>
-            </div>
-            <div class="front-tagline">Tu historia, nuestra ciencia.<br>Emoción real al instante.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card-face card-back">
-      <div style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; height: 100%; background: #0D0D0D;">
-        <div style="text-align: left;">
-          <p style="font-family: 'Cinzel'; color: var(--gold); font-size: 0.7rem;">Contacto Directo</p>
-          <p style="font-size: 0.5rem; margin-top: 0.5rem; color: var(--white-dim);">Zapopan, Jalisco, MX</p>
-          <p style="font-size: 0.6rem; margin-top: 1rem;">📞 3343215254</p>
-        </div>
-        <div id="qrcode-card"></div>
-      </div>
-    </div>
-  </div>
-</div>
+  <section class="hero">
+    <div class="hero-card">
 
-<section class="pricing-section">
-  <h2 style="font-family: 'Cinzel'; font-size: 0.7rem; text-align: center; color: var(--gold); letter-spacing: 0.2em;">Inversión por Activo</h2>
+      <!-- Logo sin fondo negro via mix-blend-mode: screen -->
+      <div class="hero-logo">
+        <img src="logo.png" alt="EAMR Shield" />
+      </div>
+
+      <!-- Texto centrado -->
+      <div class="hero-info">
+        <h2>Edgar Romero</h2>
+        <div class="hero-icons">
+          <span>ðŸŽ™</span>
+          <span>ðŸŽµ</span>
+          <span>ðŸŽ›</span>
+        </div>
+        <blockquote class="hero-tagline">
+          Tu historia, nuestra ciencia.<br />
+          EmociÃ³n real al instante.
+        </blockquote>
+        <p class="hero-contact">
+          <span>ðŸ“</span>Zapopan, Jalisco, MX &nbsp;Â·&nbsp; <span>ðŸ“ž</span>3343215254
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <h2 class="section-title">InversiÃ³n por Activo</h2>
+
   <div class="pricing-grid">
-    
-    <div class="price-card featured">
-      <p class="price-title">Personalizado Basico (Agregas 1 elemento ej:Tu nombre).</p>
-      <p class="price-amount">$0 <span>MXN / Muestra Demo</span></p>
-      <ul class="price-features">
+
+    <div class="plan">
+      <p class="plan-name">Personalizado BÃ¡sico<br />(Agregas 1 elemento, ej: Tu nombre)</p>
+      <div class="plan-price">$0 <sub>MXN</sub></div>
+      <p class="plan-period">/ Muestra Demo</p>
+      <ul class="plan-features">
         <li>Acceso a canciones generadas con IA como muestra.</li>
-        <li>Uso basico, estrictamente personal. Nota: Es premium en experiencia, no en derechos.</li>
+        <li>Uso bÃ¡sico, estrictamente personal. <em>Premium en experiencia, no en derechos.</em></li>
         <li>Descarga libre sin costo.</li>
-        <li>No incluye personalización bajo pedido.</li>
-        <li>No incluye derechos comercialese</li>
-        <li>No se permite monetización, distribución o registro.</li>
-        <li>Nota: Estas canciones forman parte de un catálogo de</li>
-        <li>demostración y no están disponibles para venta directa.</li>  
+        <li>No incluye personalizaciÃ³n bajo pedido.</li>
+        <li>No incluye derechos comerciales.</li>
+        <li>No se permite monetizaciÃ³n, distribuciÃ³n o registro.</li>
+        <li>Canciones de catÃ¡logo demostrativo; no disponibles para venta directa.</li>
       </ul>
     </div>
 
-    <div class="price-card featured">
-      <p class="price-title">Premium Personalizado basico.</p>
-      <p class="price-amount">$150 - $200<span>MXN / Activo</span></p>
-      <ul class="price-features">
-        <li>Para personas (regalos, XV años, pareja, cumpleaños).</li>
-        <li>Mastering Profesional (WAV)</li>
-        <li><strong>Uso personal Unicamente</strong></li>
-        <li>Sin edicion avanzada</li>
-        <li>Sin Stems</li>
-        <li>Con atribución obligatoria (Crédito visible: "Producción por EAMR")</li>
+    <div class="plan">
+      <p class="plan-name">Premium Personalizado BÃ¡sico</p>
+      <div class="plan-price">$150 â€“ $200 <sub>MXN</sub></div>
+      <p class="plan-period">/ Activo</p>
+      <ul class="plan-features">
+        <li>Para personas (regalos, XV aÃ±os, pareja, cumpleaÃ±os).</li>
+        <li>Mastering Profesional (WAV).</li>
+        <li><strong>Uso personal Ãºnicamente.</strong></li>
+        <li>Sin ediciÃ³n avanzada.</li>
+        <li>Sin Stems.</li>
+        <li>AtribuciÃ³n obligatoria: "ProducciÃ³n por EAMR".</li>
       </ul>
     </div>
 
-    <div class="price-card featured">
-      <p class="price-title">Premium Personalizado Avanzado.</p>
-      <p class="price-amount">$200 - $600 <span>MXN / Activo</span></p>
-      <ul class="price-features">
-        <li>Para personas (regalos, XV años, pareja, cumpleaños) y negocios.</li>
-        <li>Mastering Profesional (WAV)</li>
-        <li><strong>Licencia Comercial Total</strong></li>
-        <li>Registro en Blockchain/Digital</li>
-        <li>Entrega de Stems (Instrumental separado)</li>
-        <li>Sin Atribución (Marca Blanca)</li>  
+    <div class="plan">
+      <p class="plan-name">Premium Personalizado Avanzado</p>
+      <div class="plan-price">$200 â€“ $600 <sub>MXN</sub></div>
+      <p class="plan-period">/ Activo</p>
+      <ul class="plan-features">
+        <li>Para personas y negocios (regalos, XV aÃ±os, pareja, cumpleaÃ±os).</li>
+        <li>Mastering Profesional (WAV).</li>
+        <li><strong>Licencia Comercial Total.</strong></li>
+        <li>Registro en Blockchain / Digital.</li>
+        <li>Entrega de Stems (Instrumental separado).</li>
+        <li>Sin AtribuciÃ³n (Marca Blanca).</li>
       </ul>
     </div>
 
   </div>
-</section>
 
-<div class="actions">
-  <a href="https://wa.me/523343215254" class="action-btn" style="text-decoration: none; color: inherit; text-align: center;">
-    <div class="action-icon">💬</div><span style="font-size: 0.5rem;">WhatsApp</span>
-  </a>
-  <a href="tel:3343215254" class="action-btn" style="text-decoration: none; color: inherit; text-align: center;">
-    <div class="action-icon">📞</div><span style="font-size: 0.5rem;">Llamar</span>
-  </a>
-</div>
+  <div class="cta-section">
+    <div class="btn-row">
+      <a href="https://wa.me/523343215254" class="btn btn-primary">ðŸ’¬ WhatsApp</a>
+      <a href="tel:3343215254" class="btn btn-outline">ðŸ“ž Llamar</a>
+    </div>
+    <a href="https://edheller33.github.io/Music_dem/" class="btn btn-catalog">â–¶ Ver CatÃ¡logo Musical</a>
+  </div>
 
-<a href="https://edheller33.github.io/Music_dem/" class="catalog-btn">VER CATÁLOGO MUSICAL</a>
+  <footer>Â© 2026 EAMR â€“ Edgar Romero | Estratega Musical</footer>
 
-<footer style="margin-top: 3rem; text-align: center; opacity: 0.4; font-size: 0.5rem;">
-  © 2026 EAMR – EDGAR ROMERO | ESTRATEGA MUSICAL
-</footer>
-
-<script>
-  function toggleFlip() { document.getElementById('cardFlip').parentElement.classList.toggle('flipped'); }
-  window.addEventListener('DOMContentLoaded', () => {
-    new QRCode(document.getElementById('qrcode-card'), {
-      text: 'https://edheller33.github.io/Music_dem/',
-      width: 75, height: 75, colorDark: '#0A0A0A', colorLight: '#FFFFFF'
-    });
-  });
-</script>
 </body>
 </html>
