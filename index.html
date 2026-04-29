@@ -3,354 +3,646 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EAMR â€“ Edgar Romero | Estratega de Activos Musicales Registrables</title>
+  <title>EAMR – Edgar Romero | Estratega de Activos Musicales Registrables</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
 
+  <style>
+    /* ═══════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════ */
     :root {
-      --gold:        #c9a84c;
-      --gold-light:  #e8c97a;
-      --gold-dark:   #8a6a20;
-      --bg:          #0a0a0a;
-      --surface:     #111111;
-      --surface2:    #161616;
-      --border:      rgba(201,168,76,.25);
-      --text:        #e8dcc8;
-      --text-muted:  #9a8a6a;
+      --gold:         #c9a84c;
+      --gold-light:   #e8c97a;
+      --gold-pale:    rgba(201,168,76,.11);
+      --gold-border:  rgba(201,168,76,.26);
+      --gold-glow:    rgba(201,168,76,.20);
+      --ink:          #080808;
+      --surface:      #101010;
+      --surface-2:    #171717;
+      --text:         #ede4d0;
+      --text-muted:   #8a7a5a;
+      --text-dim:     #524535;
+      --r-card:       20px;
+      --r-btn:        10px;
+      --ease:         .26s cubic-bezier(.4,0,.2,1);
     }
 
+    /* ═══════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
+      background: var(--ink);
       color: var(--text);
       font-family: 'Cormorant Garamond', Georgia, serif;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* â”€â”€ HEADER â”€â”€ */
+    /* Subtle grain texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: .022;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ═══════════════════════════════════
+       HEADER
+    ═══════════════════════════════════ */
     header {
+      position: relative;
       text-align: center;
-      padding: 3rem 1.5rem 2rem;
-      border-bottom: 1px solid var(--border);
+      padding: 4.5rem 2rem 3rem;
+      z-index: 1;
     }
-    header h1 {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(2.8rem, 10vw, 5rem);
-      letter-spacing: .35em;
-      color: var(--gold);
-      text-shadow: 0 0 40px rgba(201,168,76,.3);
-    }
-    header p {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(.55rem, 2.2vw, .75rem);
-      letter-spacing: .28em;
-      color: var(--text-muted);
-      margin-top: .6rem;
-      text-transform: uppercase;
+    header::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 220px;
+      background: radial-gradient(ellipse, rgba(201,168,76,.07) 0%, transparent 70%);
+      pointer-events: none;
     }
 
-    /* â”€â”€ HERO CARD â”€â”€ */
-    .hero {
-      max-width: 760px;
-      margin: 2.5rem auto;
-      padding: 0 1.25rem;
+    .brand-wordmark {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(3.8rem, 13vw, 7rem);
+      font-weight: 900;
+      letter-spacing: .55em;
+      padding-right: .55em;
+      color: var(--gold);
+      text-shadow: 0 0 70px rgba(201,168,76,.22), 0 2px 0 rgba(0,0,0,.7);
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+      animation: fadeDown .75s ease both;
     }
-    .hero-card {
+    .brand-sub {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(.54rem, 2vw, .78rem);
+      letter-spacing: .38em;
+      color: var(--text-muted);
+      margin-top: 1.1rem;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+      animation: fadeDown .75s .12s ease both;
+    }
+    .ornament {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.75rem;
-      box-shadow: 0 0 60px rgba(201,168,76,.07);
+      gap: .9rem;
+      max-width: 440px;
+      margin: 2rem auto 0;
+      animation: fadeIn .75s .28s ease both;
+    }
+    .ornament span { flex: 1; height: 1px; background: var(--gold-border); }
+    .ornament i    { color: var(--gold); font-style: normal; font-size: .7rem; }
+
+    /* ═══════════════════════════════════
+       HERO CARD
+    ═══════════════════════════════════ */
+    .hero {
+      max-width: 840px;
+      margin: 2.75rem auto 0;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp .85s .32s ease both;
+    }
+    .hero-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 2.75rem;
+      background: linear-gradient(140deg, var(--surface-2) 0%, var(--surface) 100%);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--r-card);
+      padding: 2.75rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Interior ambient glow */
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--r-card);
+      background: radial-gradient(ellipse at 28% 55%, rgba(201,168,76,.05) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    /* Top highlight line */
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,.35), transparent);
     }
 
-    /* LOGO: mix-blend-mode:screen elimina visualmente el fondo negro del PNG */
-    .hero-logo {
-      flex-shrink: 0;
-      width: clamp(110px, 28vw, 160px);
+    /* ── Logo ── */
+    .logo-wrap {
+      width: clamp(140px, 23vw, 210px);
       aspect-ratio: 1;
-      border-radius: 10px;
-      overflow: hidden;
-      background: var(--bg);
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .hero-logo img {
+    /* Soft halo behind shield */
+    .logo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -16px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,.14) 0%, transparent 68%);
+      animation: pulse 3.8s ease-in-out infinite;
+    }
+    /* Overlay that masks the PNG's residual background color.
+       Uses the exact same gradient as the hero-card, placed BEHIND
+       the image but OVER the halo, so only the shield art shows. */
+    .logo-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 4px;
+      background: linear-gradient(140deg, var(--surface-2) 0%, var(--surface) 100%);
+      z-index: 0;
+    }
+    .logo-wrap img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      mix-blend-mode: screen;
+      object-fit: contain;
       display: block;
+      position: relative;
+      z-index: 1;
+      /* screen blend: black pixels vanish, gold/metal tones shine through */
+      mix-blend-mode: screen;
+      filter:
+        drop-shadow(0 0 22px rgba(201,168,76,.35))
+        contrast(1.1)
+        brightness(1.08)
+        saturate(1.12);
     }
 
-    /* INFO: centrado horizontal y vertical */
+    /* ── Info column – all centered ── */
     .hero-info {
-      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: .55rem;
+      gap: 1rem;
     }
-    .hero-info h2 {
+    .hero-name {
       font-family: 'Cinzel', serif;
-      font-size: clamp(1.3rem, 5vw, 2rem);
-      font-weight: 600;
+      font-size: clamp(1.6rem, 5vw, 2.6rem);
+      font-weight: 700;
       color: var(--text);
-      letter-spacing: .05em;
+      letter-spacing: .09em;
+      line-height: 1;
     }
-    .hero-icons {
+    .hero-rule {
+      width: 3.5rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .hero-badges {
       display: flex;
-      align-items: center;
+      gap: .55rem;
+      flex-wrap: wrap;
       justify-content: center;
-      gap: .65rem;
+    }
+    .badge {
+      font-family: 'Cinzel', serif;
+      font-size: .56rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
       color: var(--gold);
-      font-size: 1.05rem;
-      opacity: .85;
+      border: 1px solid var(--gold-border);
+      border-radius: 100px;
+      padding: .28rem .8rem;
+      background: var(--gold-pale);
     }
     .hero-tagline {
-      font-size: clamp(.88rem, 2.5vw, 1.05rem);
+      font-size: clamp(1rem, 2.6vw, 1.25rem);
       font-style: italic;
       color: var(--text-muted);
-      border-left: 2px solid var(--gold-dark);
-      padding-left: .8rem;
-      line-height: 1.65;
-      text-align: left;
+      line-height: 1.75;
+      font-weight: 300;
     }
     .hero-contact {
-      font-size: .78rem;
+      display: flex;
+      flex-direction: column;
+      gap: .28rem;
+      font-size: .82rem;
       color: var(--text-muted);
       letter-spacing: .04em;
-      margin-top: .15rem;
+      align-items: center;
     }
-    .hero-contact span { color: var(--gold); margin-right: .3rem; }
+    .hero-contact a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--ease);
+    }
+    .hero-contact a:hover { color: var(--gold); }
+    .ci { color: var(--gold); margin-right: .35rem; }
 
-    /* â”€â”€ PRICING â”€â”€ */
+    /* ═══════════════════════════════════
+       PRICING
+    ═══════════════════════════════════ */
+    .section {
+      max-width: 980px;
+      margin: 4.5rem auto 0;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp .85s .48s ease both;
+    }
+    .section-header { text-align: center; margin-bottom: 2.25rem; }
+    .section-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: .6rem;
+      letter-spacing: .42em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: .6rem;
+    }
     .section-title {
       font-family: 'Cinzel', serif;
-      text-align: center;
-      font-size: clamp(.85rem, 3vw, 1.05rem);
-      letter-spacing: .3em;
+      font-size: clamp(1.1rem, 4vw, 1.55rem);
+      font-weight: 600;
+      letter-spacing: .14em;
       color: var(--gold);
-      text-transform: uppercase;
-      margin: 2.5rem 0 1.5rem;
     }
 
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
       gap: 1.25rem;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 1.25rem 2.5rem;
     }
 
     .plan {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.5rem 1.25rem;
+      background: linear-gradient(155deg, var(--surface-2) 0%, var(--surface) 100%);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--r-card);
+      padding: 2.1rem 1.85rem;
       display: flex;
       flex-direction: column;
-      gap: .75rem;
-      transition: box-shadow .25s, border-color .25s;
+      gap: 1.1rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--ease), box-shadow var(--ease), transform var(--ease);
+    }
+    .plan::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity var(--ease);
     }
     .plan:hover {
-      border-color: var(--gold-dark);
-      box-shadow: 0 0 30px rgba(201,168,76,.12);
+      border-color: rgba(201,168,76,.48);
+      box-shadow: 0 10px 44px rgba(201,168,76,.09), 0 0 0 1px rgba(201,168,76,.06);
+      transform: translateY(-4px);
+    }
+    .plan:hover::before { opacity: 1; }
+    .plan.featured { border-color: rgba(201,168,76,.45); }
+    .plan.featured::before { opacity: .55; }
+
+    .plan-tier {
+      display: flex;
+      align-items: flex-start;
+      gap: .55rem;
+    }
+    .plan-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      margin-top: .45rem;
     }
     .plan-name {
       font-family: 'Cinzel', serif;
-      font-size: .7rem;
-      letter-spacing: .15em;
+      font-size: .64rem;
+      letter-spacing: .16em;
       color: var(--gold);
       text-transform: uppercase;
-      line-height: 1.5;
+      line-height: 1.55;
     }
-    .plan-price {
+    .plan-pricing {
+      border-top: 1px solid rgba(201,168,76,.1);
+      padding-top: 1.1rem;
+    }
+    .plan-amount {
       font-family: 'Cinzel', serif;
-      font-size: clamp(1.6rem, 5vw, 2rem);
+      font-size: clamp(1.9rem, 5vw, 2.3rem);
       color: var(--text);
+      font-weight: 600;
+      line-height: 1;
     }
-    .plan-price sub {
-      font-size: .6em;
-      color: var(--text-muted);
-      vertical-align: baseline;
-    }
-    .plan-period {
-      font-size: .75rem;
-      color: var(--text-muted);
-      margin-top: -.4rem;
+    .plan-amount sup { font-size: .48em; color: var(--text-muted); vertical-align: top; margin-top: .2em; }
+    .plan-amount sub { font-size: .44em; color: var(--text-muted); vertical-align: baseline; }
+    .plan-cadence {
+      font-size: .78rem;
+      color: var(--text-dim);
+      margin-top: .38rem;
+      font-style: italic;
     }
     .plan-features {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: .45rem;
+      gap: .55rem;
       flex: 1;
     }
     .plan-features li {
-      font-size: .82rem;
+      display: grid;
+      grid-template-columns: 14px 1fr;
+      gap: .45rem;
+      font-size: .85rem;
       color: var(--text-muted);
-      padding-left: 1.1rem;
-      position: relative;
-      line-height: 1.45;
+      line-height: 1.5;
+      align-items: start;
     }
     .plan-features li::before {
-      content: 'âœ“';
-      position: absolute;
-      left: 0;
-      color: var(--gold-dark);
-      font-size: .75rem;
+      content: '✦';
+      color: var(--gold);
+      font-size: .52rem;
+      margin-top: .32rem;
     }
     .plan-features li strong { color: var(--text); font-weight: 600; }
+    .plan-features li em {
+      color: var(--text-dim);
+      font-size: .82em;
+      display: inline;
+      white-space: normal;
+      word-break: normal;
+    }
 
-    /* â”€â”€ CTA â”€â”€ */
+    /* ═══════════════════════════════════
+       CTA
+    ═══════════════════════════════════ */
     .cta-section {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
-      padding: 0 1.25rem 3rem;
+      gap: 1.1rem;
+      padding: 3.75rem 1.5rem 0;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp .85s .62s ease both;
     }
-    .btn-row { display: flex; gap: .9rem; flex-wrap: wrap; justify-content: center; }
+    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
     .btn {
       display: inline-flex;
       align-items: center;
       gap: .5rem;
       font-family: 'Cinzel', serif;
-      font-size: .73rem;
-      letter-spacing: .12em;
+      font-size: .71rem;
+      letter-spacing: .16em;
       text-transform: uppercase;
-      padding: .75rem 1.6rem;
-      border-radius: 8px;
+      padding: .9rem 2.1rem;
+      border-radius: var(--r-btn);
       text-decoration: none;
-      transition: background .2s, color .2s, box-shadow .2s;
+      border: none;
+      cursor: pointer;
+      transition: background var(--ease), color var(--ease),
+                  box-shadow var(--ease), transform var(--ease);
+      white-space: nowrap;
     }
-    .btn-primary { background: var(--gold); color: #0a0a0a; font-weight: 700; }
-    .btn-primary:hover { background: var(--gold-light); box-shadow: 0 0 20px rgba(201,168,76,.4); }
-    .btn-outline { background: transparent; color: var(--gold); border: 1px solid var(--gold-dark); }
-    .btn-outline:hover { background: rgba(201,168,76,.08); }
-    .btn-catalog { background: transparent; color: var(--text-muted); border: 1px solid var(--border); letter-spacing: .18em; }
-    .btn-catalog:hover { color: var(--gold); border-color: var(--gold-dark); }
+    .btn:active { transform: scale(.97); }
+    .btn-primary { background: var(--gold); color: #07050a; font-weight: 700; }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      box-shadow: 0 0 30px rgba(201,168,76,.45), 0 4px 14px rgba(0,0,0,.45);
+      transform: translateY(-2px);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold-border);
+    }
+    .btn-ghost:hover {
+      background: var(--gold-pale);
+      border-color: rgba(201,168,76,.5);
+      transform: translateY(-2px);
+    }
+    .btn-catalog {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid rgba(255,255,255,.05);
+      letter-spacing: .24em;
+      font-size: .64rem;
+    }
+    .btn-catalog:hover {
+      color: var(--gold);
+      border-color: var(--gold-border);
+      transform: translateY(-2px);
+    }
 
-    /* â”€â”€ FOOTER â”€â”€ */
+    /* ═══════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════ */
     footer {
       text-align: center;
-      padding: 1.5rem;
-      border-top: 1px solid var(--border);
+      padding: 3.5rem 1.5rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-ornament {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+      max-width: 360px;
+      margin: 0 auto 1.5rem;
+    }
+    .footer-ornament span { flex: 1; height: 1px; background: var(--gold-border); }
+    .footer-ornament i    { color: var(--gold); font-style: normal; font-size: .68rem; }
+    footer p {
       font-family: 'Cinzel', serif;
-      font-size: .6rem;
-      letter-spacing: .2em;
-      color: var(--text-muted);
+      font-size: .57rem;
+      letter-spacing: .26em;
+      color: var(--text-dim);
+      text-transform: uppercase;
     }
 
-    /* â”€â”€ RESPONSIVE â”€â”€ */
-    @media (max-width: 480px) {
-      .hero-card { flex-direction: column; }
-      .hero-tagline { border-left: none; border-top: 2px solid var(--gold-dark); padding: .5rem 0 0; text-align: center; }
+    /* ═══════════════════════════════════
+       KEYFRAMES
+    ═══════════════════════════════════ */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: .55; transform: scale(1); }
+      50%       { opacity: .9;  transform: scale(1.07); }
+    }
+
+    /* ═══════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════ */
+    @media (max-width: 580px) {
+      .hero-card {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        padding: 2.25rem 1.6rem;
+        gap: 2rem;
+      }
+      .logo-wrap { width: clamp(140px, 58vw, 190px); }
     }
   </style>
 </head>
 <body>
 
+  <!-- ══ HEADER ══ -->
   <header>
-    <h1>EAMR</h1>
-    <p>Estratega de Activos Musicales Registrables</p>
+    <h1 class="brand-wordmark">EAMR</h1>
+    <p class="brand-sub">Estratega de Activos Musicales Registrables</p>
+    <div class="ornament"><span></span><i>✦</i><span></span></div>
   </header>
 
+  <!-- ══ HERO ══ -->
   <section class="hero">
     <div class="hero-card">
 
-      <!-- Logo sin fondo negro via mix-blend-mode: screen -->
-      <div class="hero-logo">
-        <img src="logo.png" alt="EAMR Shield" />
+      <!-- Escudo: sin fondo sólido, integrado a la tarjeta oscura -->
+      <div class="logo-wrap">
+        <img src="logo.png" alt="Escudo EAMR" />
       </div>
 
-      <!-- Texto centrado -->
+      <!-- Texto completamente centrado -->
       <div class="hero-info">
-        <h2>Edgar Romero</h2>
-        <div class="hero-icons">
-          <span>ðŸŽ™</span>
-          <span>ðŸŽµ</span>
-          <span>ðŸŽ›</span>
+        <h2 class="hero-name">Edgar Romero</h2>
+        <div class="hero-rule"></div>
+
+        <div class="hero-badges">
+          <span class="badge">🎙 Composición IA</span>
+          <span class="badge">🎵 Mastering</span>
+          <span class="badge">🎛 Stems</span>
         </div>
-        <blockquote class="hero-tagline">
+
+        <p class="hero-tagline">
           Tu historia, nuestra ciencia.<br />
-          EmociÃ³n real al instante.
-        </blockquote>
-        <p class="hero-contact">
-          <span>ðŸ“</span>Zapopan, Jalisco, MX &nbsp;Â·&nbsp; <span>ðŸ“ž</span>3343215254
+          Emoción real al instante.
         </p>
+
+        <div class="hero-contact">
+          <span><span class="ci">📍</span>Zapopan, Jalisco, MX</span>
+          <a href="tel:3343215254"><span class="ci">📞</span>334&nbsp;321&nbsp;5254</a>
+        </div>
       </div>
 
     </div>
   </section>
 
-  <h2 class="section-title">InversiÃ³n por Activo</h2>
-
-  <div class="pricing-grid">
-
-    <div class="plan">
-      <p class="plan-name">Personalizado BÃ¡sico<br />(Agregas 1 elemento, ej: Tu nombre)</p>
-      <div class="plan-price">$0 <sub>MXN</sub></div>
-      <p class="plan-period">/ Muestra Demo</p>
-      <ul class="plan-features">
-        <li>Acceso a canciones generadas con IA como muestra.</li>
-        <li>Uso bÃ¡sico, estrictamente personal. <em>Premium en experiencia, no en derechos.</em></li>
-        <li>Descarga libre sin costo.</li>
-        <li>No incluye personalizaciÃ³n bajo pedido.</li>
-        <li>No incluye derechos comerciales.</li>
-        <li>No se permite monetizaciÃ³n, distribuciÃ³n o registro.</li>
-        <li>Canciones de catÃ¡logo demostrativo; no disponibles para venta directa.</li>
-      </ul>
+  <!-- ══ PRICING ══ -->
+  <section class="section">
+    <div class="section-header">
+      <p class="section-eyebrow">Servicios</p>
+      <h2 class="section-title">Inversión por Activo</h2>
     </div>
 
-    <div class="plan">
-      <p class="plan-name">Premium Personalizado BÃ¡sico</p>
-      <div class="plan-price">$150 â€“ $200 <sub>MXN</sub></div>
-      <p class="plan-period">/ Activo</p>
-      <ul class="plan-features">
-        <li>Para personas (regalos, XV aÃ±os, pareja, cumpleaÃ±os).</li>
-        <li>Mastering Profesional (WAV).</li>
-        <li><strong>Uso personal Ãºnicamente.</strong></li>
-        <li>Sin ediciÃ³n avanzada.</li>
-        <li>Sin Stems.</li>
-        <li>AtribuciÃ³n obligatoria: "ProducciÃ³n por EAMR".</li>
-      </ul>
+    <div class="pricing-grid">
+
+      <!-- Demo -->
+      <div class="plan">
+        <div class="plan-tier">
+          <div class="plan-dot" style="background:var(--text-dim);"></div>
+          <p class="plan-name" style="color:var(--text-muted);">
+            Personalizado Básico<br /><em style="font-family:inherit;font-style:normal;opacity:.7;">(+ 1 elemento, ej: tu nombre)</em>
+          </p>
+        </div>
+        <div class="plan-pricing">
+          <div class="plan-amount">$0 <sub>MXN</sub></div>
+          <p class="plan-cadence">Muestra Demo</p>
+        </div>
+        <ul class="plan-features">
+          <li>Acceso a canciones generadas con IA.</li>
+          <li>Uso básico, estrictamente personal — premium en experiencia, no en derechos.</li>
+          <li>Descarga libre sin costo.</li>
+          <li>Sin personalización bajo pedido.</li>
+          <li>Sin derechos comerciales.</li>
+          <li>No se permite monetización, distribución ni registro.</li>
+          <li>Catálogo de demostración — no disponible para venta directa.</li>
+        </ul>
+      </div>
+
+      <!-- Personal -->
+      <div class="plan featured">
+        <div class="plan-tier">
+          <div class="plan-dot"></div>
+          <p class="plan-name">Premium Personalizado Básico</p>
+        </div>
+        <div class="plan-pricing">
+          <div class="plan-amount"><sup>$</sup>150&nbsp;–&nbsp;200 <sub>MXN</sub></div>
+          <p class="plan-cadence">por Activo</p>
+        </div>
+        <ul class="plan-features">
+          <li>Para personas — regalos, XV años, pareja, cumpleaños.</li>
+          <li>Mastering profesional (WAV).</li>
+          <li><strong>Uso personal únicamente.</strong></li>
+          <li>Sin edición avanzada ni Stems.</li>
+          <li>Atribución obligatoria: <em>"Producción por EAMR"</em>.</li>
+        </ul>
+      </div>
+
+      <!-- Comercial -->
+      <div class="plan">
+        <div class="plan-tier">
+          <div class="plan-dot" style="background:var(--gold-light);"></div>
+          <p class="plan-name">Premium Personalizado Avanzado</p>
+        </div>
+        <div class="plan-pricing">
+          <div class="plan-amount"><sup>$</sup>200&nbsp;–&nbsp;600 <sub>MXN</sub></div>
+          <p class="plan-cadence">por Activo</p>
+        </div>
+        <ul class="plan-features">
+          <li>Para personas y negocios — regalos, XV años, pareja, cumpleaños.</li>
+          <li>Mastering profesional (WAV).</li>
+          <li><strong>Licencia Comercial Total.</strong></li>
+          <li>Registro en Blockchain / Digital.</li>
+          <li>Entrega de Stems (instrumental separado).</li>
+          <li>Sin atribución — <strong>Marca Blanca.</strong></li>
+        </ul>
+      </div>
+
     </div>
+  </section>
 
-    <div class="plan">
-      <p class="plan-name">Premium Personalizado Avanzado</p>
-      <div class="plan-price">$200 â€“ $600 <sub>MXN</sub></div>
-      <p class="plan-period">/ Activo</p>
-      <ul class="plan-features">
-        <li>Para personas y negocios (regalos, XV aÃ±os, pareja, cumpleaÃ±os).</li>
-        <li>Mastering Profesional (WAV).</li>
-        <li><strong>Licencia Comercial Total.</strong></li>
-        <li>Registro en Blockchain / Digital.</li>
-        <li>Entrega de Stems (Instrumental separado).</li>
-        <li>Sin AtribuciÃ³n (Marca Blanca).</li>
-      </ul>
-    </div>
-
-  </div>
-
+  <!-- ══ CTA ══ -->
   <div class="cta-section">
     <div class="btn-row">
-      <a href="https://wa.me/523343215254" class="btn btn-primary">ðŸ’¬ WhatsApp</a>
-      <a href="tel:3343215254" class="btn btn-outline">ðŸ“ž Llamar</a>
+      <a href="https://wa.me/523343215254" class="btn btn-primary">💬 WhatsApp</a>
+      <a href="tel:3343215254" class="btn btn-ghost">📞 Llamar</a>
     </div>
-    <a href="https://edheller33.github.io/Music_dem/" class="btn btn-catalog">â–¶ Ver CatÃ¡logo Musical</a>
+    <a href="https://edheller33.github.io/Music_dem/" class="btn btn-catalog">▶ Ver Catálogo Musical</a>
   </div>
 
-  <footer>Â© 2026 EAMR â€“ Edgar Romero | Estratega Musical</footer>
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-ornament"><span></span><i>✦</i><span></span></div>
+    <p>© 2026 EAMR – Edgar Romero &nbsp;|&nbsp; Estratega Musical</p>
+  </footer>
 
 </body>
-</html>
+  </html>
+  
