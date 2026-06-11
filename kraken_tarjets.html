@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>EAMR – Edgardo Romero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gl:#E8C97A;--gd:#8B6914;--gm:#A07830;
+  --bg:#060606;--card:#0E0E0E;--mid:#181818;
+  --white:#F5F0E8;--dim:#A09080;
+  --red:#8B1A1A;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:'Montserrat',sans-serif;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ── CANVAS PARTICLES ── */
+#cvs{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55}
+
+/* ── SCANLINES ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);
+  pointer-events:none;z-index:1;
+}
+
+/* ══════ SECTION BASE ══════ */
+.section{
+  min-height:100svh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  position:relative;z-index:10;
+  scroll-snap-align:start;
+  padding:2rem 1rem;
+  overflow:hidden;
+}
+
+/* ══════ HERO SECTION ══════ */
+#hero{
+  background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(201,168,76,.08) 0%,transparent 70%);
+  gap:0;
+}
+
+.hero-logo-wrap{
+  position:relative;
+  width:min(260px,65vw);
+  margin-bottom:.5rem;
+  animation:floatLogo 6s ease-in-out infinite;
+}
+@keyframes floatLogo{
+  0%,100%{transform:translateY(0) rotate(-.5deg)}
+  50%{transform:translateY(-12px) rotate(.5deg)}
+}
+.hero-logo-img{
+  width:100%;
+  filter:drop-shadow(0 0 22px rgba(201,168,76,.6)) drop-shadow(0 0 55px rgba(201,168,76,.25));
+}
+/* Halo ring */
+.hero-logo-wrap::after{
+  content:'';
+  position:absolute;
+  bottom:-18px;left:50%;
+  transform:translateX(-50%);
+  width:75%;height:18px;
+  background:radial-gradient(ellipse at center,rgba(201,168,76,.35) 0%,transparent 70%);
+  border-radius:50%;
+  filter:blur(4px);
+  animation:halo 6s ease-in-out infinite;
+}
+@keyframes halo{
+  0%,100%{opacity:.6;width:65%}
+  50%{opacity:1;width:80%}
+}
+
+.hero-wordmark{
+  font-family:'Cinzel',serif;
+  font-size:clamp(2rem,8vw,3.5rem);
+  font-weight:700;
+  letter-spacing:.28em;
+  background:linear-gradient(135deg,var(--gd) 0%,var(--gold) 35%,var(--gl) 55%,var(--gold) 75%,var(--gd) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:200% auto;
+  animation:shimmer 4s ease-in-out infinite;
+  line-height:1;
+  margin-bottom:.2em;
+}
+@keyframes shimmer{
+  0%{background-position:0% center}
+  50%{background-position:100% center}
+  100%{background-position:0% center}
+}
+.hero-sub{
+  font-size:clamp(.52rem,2vw,.72rem);
+  letter-spacing:.38em;
+  text-transform:uppercase;
+  color:var(--gold);
+  opacity:.6;
+  text-align:center;
+  margin-bottom:1.8rem;
+}
+.hero-tagline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.88rem,3.2vw,1.15rem);
+  font-style:italic;
+  font-weight:300;
+  color:var(--white);
+  opacity:.8;
+  text-align:center;
+  letter-spacing:.06em;
+  line-height:1.4;
+  max-width:380px;
+  margin-bottom:2rem;
+}
+
+/* EQ Visualizer */
+.eq-hero{
+  display:flex;align-items:flex-end;gap:3px;
+  height:40px;margin-bottom:1.5rem;
+}
+.eq-hero span{
+  display:block;width:4px;border-radius:2px 2px 0 0;
+  background:linear-gradient(to top,var(--gd),var(--gl));
+  animation:eq var(--spd,.8s) ease-in-out infinite alternate;
+  transform-origin:bottom;
+}
+@keyframes eq{from{transform:scaleY(.1);opacity:.4}to{transform:scaleY(1);opacity:1}}
+
+.hero-cta{
+  display:inline-flex;align-items:center;gap:.6rem;
+  padding:.75rem 2rem;
+  border:1px solid var(--gold);
+  border-radius:40px;
+  color:var(--gold);
+  font-family:'Cinzel',serif;
+  font-size:.7rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  text-decoration:none;
+  position:relative;overflow:hidden;
+  transition:color .3s,box-shadow .3s;
+}
+.hero-cta::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--gd),var(--gold));
+  transform:translateX(-100%);transition:transform .4s ease;
+}
+.hero-cta:hover::before{transform:translateX(0)}
+.hero-cta:hover{color:#060606;box-shadow:0 0 30px rgba(201,168,76,.4)}
+.hero-cta span,.hero-cta svg{position:relative;z-index:1}
+
+.scroll-indicator{
+  position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  animation:bounce 2s ease-in-out infinite;
+  opacity:.5;
+}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+.scroll-indicator span{
+  font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);
+}
+.scroll-arrow{
+  width:18px;height:18px;border-right:1px solid var(--gold);border-bottom:1px solid var(--gold);
+  transform:rotate(45deg);
+}
+
+/* ══════ CARD SECTION ══════ */
+#card-section{
+  background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(201,168,76,.05) 0%,transparent 70%);
+  gap:1rem;
+}
+
+.section-label{
+  font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);opacity:.5;
+  margin-bottom:.8rem;
+}
+
+/* ── CARD FLIP ── */
+.card-scene{
+  width:min(420px,94vw);
+  aspect-ratio:1.75/1;
+  perspective:1400px;
+  cursor:pointer;
+  position:relative;
+}
+.card-flip{
+  width:100%;height:100%;
+  transform-style:preserve-3d;
+  transition:transform .9s cubic-bezier(.45,0,.55,1);
+  position:relative;
+}
+.card-scene.flipped .card-flip{transform:rotateY(180deg)}
+.card-face{
+  position:absolute;inset:0;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:20px;overflow:hidden;
+  box-shadow:0 0 0 1px rgba(201,168,76,.25),0 12px 50px rgba(0,0,0,.9),0 0 80px rgba(201,168,76,.06);
+}
+.card-back{transform:rotateY(180deg)}
+
+/* FRONT */
+.front-bg{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#0A0A0A 0%,#181818 50%,#0A0A0A 100%);
+  position:relative;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:clamp(.6rem,2vw,1rem);
+  overflow:hidden;
+  gap:.3em;
+}
+/* Circuit grid */
+.front-bg::before{
+  content:'';position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(90deg,transparent 0,transparent 30px,rgba(201,168,76,.018) 30px,rgba(201,168,76,.018) 31px),
+    repeating-linear-gradient(0deg,transparent 0,transparent 30px,rgba(201,168,76,.012) 30px,rgba(201,168,76,.012) 31px);
+  pointer-events:none;
+}
+/* Glow center */
+.front-bg::after{
+  content:'';position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:60%;height:60%;
+  background:radial-gradient(ellipse at center,rgba(201,168,76,.07) 0%,transparent 70%);
+  pointer-events:none;animation:pulseGlow 3s ease-in-out infinite;
+}
+@keyframes pulseGlow{0%,100%{opacity:.5}50%{opacity:1}}
+
+.c{position:absolute;width:16px;height:16px;border-color:var(--gold);border-style:solid;opacity:.45}
+.c.tl{top:8px;left:8px;border-width:1px 0 0 1px}
+.c.tr{top:8px;right:8px;border-width:1px 1px 0 0}
+.c.bl{bottom:8px;left:8px;border-width:0 0 1px 1px}
+.c.br{bottom:8px;right:8px;border-width:0 1px 1px 0}
+
+/* Kraken frontal - se reemplaza la imagen anterior por la nueva (kraken11) */
+.front-kraken{
+  width:clamp(48px,14vw,72px);
+  filter:drop-shadow(0 0 12px rgba(201,168,76,.8));
+  animation:floatMini 5s ease-in-out infinite;
+  flex-shrink:0;
+}
+@keyframes floatMini{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+.front-logo{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.3rem,5vw,2rem);
+  font-weight:700;letter-spacing:.22em;
+  background:linear-gradient(135deg,var(--gd) 0%,var(--gold) 40%,var(--gl) 60%,var(--gold) 80%,var(--gd) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:200% auto;animation:shimmer 4s ease-in-out infinite;
+  line-height:1;
+}
+.front-sub{
+  font-size:clamp(.34rem,1.3vw,.5rem);
+  letter-spacing:.26em;text-transform:uppercase;
+  color:var(--gold);opacity:.65;text-align:center;
+}
+/* Wave bars */
+.waves{display:flex;align-items:center;gap:2px;height:22px}
+.waves span{
+  display:block;width:2px;border-radius:1px;
+  background:linear-gradient(to top,var(--gd),var(--gl));
+  animation:wv var(--s,1s) ease-in-out infinite alternate;
+}
+@keyframes wv{from{transform:scaleY(.12);opacity:.35}to{transform:scaleY(1);opacity:.9}}
+
+.front-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.9rem,3.5vw,1.4rem);
+  font-weight:600;color:var(--white);
+  letter-spacing:.06em;text-align:center;
+}
+.front-role{
+  font-size:clamp(.32rem,1.1vw,.46rem);
+  font-weight:300;color:var(--dim);
+  letter-spacing:.15em;text-align:center;font-style:italic;
+}
+
+/* BACK */
+.back-bg{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#0C0C0C 0%,#1A1A1A 60%,#0E0E0E 100%);
+  display:grid;grid-template-columns:1fr auto;
+  gap:0;padding:clamp(.6rem,2.5vw,1rem);
+  position:relative;
+}
+.cg{position:absolute;width:12px;height:12px;border-color:var(--gold);border-style:solid;opacity:.35}
+.cg.tl{top:5px;left:5px;border-width:1px 0 0 1px}
+.cg.tr{top:5px;right:5px;border-width:1px 1px 0 0}
+.cg.bl{bottom:5px;left:5px;border-width:0 0 1px 1px}
+.cg.br{bottom:5px;right:5px;border-width:0 1px 1px 0}
+
+.back-left{display:flex;flex-direction:column;justify-content:space-between;padding-right:.7rem}
+.back-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.5rem,1.7vw,.68rem);
+  letter-spacing:.18em;color:var(--gold);
+  border-bottom:1px solid rgba(201,168,76,.2);
+  padding-bottom:.3em;margin-bottom:.4em;
+}
+.back-services{flex:1;display:flex;flex-direction:column;gap:.32em;margin-bottom:.4em}
+.si{display:flex;align-items:flex-start;gap:.35em}
+.si-icon{font-size:clamp(.55rem,1.7vw,.75rem);flex-shrink:0;line-height:1.3}
+.si-text strong{
+  display:block;font-family:'Montserrat',sans-serif;
+  font-size:clamp(.35rem,1.1vw,.5rem);font-weight:600;
+  color:var(--gold);letter-spacing:.05em;
+}
+.si-text span{
+  font-size:clamp(.3rem,.95vw,.42rem);font-weight:300;
+  color:var(--dim);line-height:1.3;
+}
+.back-contact{border-top:1px solid rgba(201,168,76,.14);padding-top:.35em}
+.cl{display:flex;align-items:center;gap:.28em;margin-bottom:.18em}
+.cl .ic{font-size:clamp(.45rem,1.4vw,.6rem);flex-shrink:0}
+.cl a{
+  font-size:clamp(.28rem,.9vw,.4rem);
+  font-weight:400;color:var(--dim);text-decoration:none;
+  transition:color .2s;letter-spacing:.03em;
+}
+.cl a:hover{color:var(--gl)}
+
+.back-right{display:flex;flex-direction:column;align-items:center;justify-content:space-between}
+.qr-lbl{
+  font-size:clamp(.28rem,.85vw,.38rem);
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);opacity:.65;text-align:center;margin-bottom:.25em;
+}
+#qr-img{
+  background:var(--white);padding:3px;
+  border-radius:4px;border:1px solid rgba(201,168,76,.35);
+  display:flex;align-items:center;justify-content:center;
+}
+#qr-img img{display:block;width:clamp(60px,16vw,80px);height:auto;border-radius:2px}
+.qr-url{
+  font-size:clamp(.25rem,.75vw,.33rem);
+  color:var(--gold);opacity:.55;text-align:center;
+  letter-spacing:.03em;margin-top:.25em;word-break:break-all;
+}
+
+.flip-hint{
+  font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);opacity:.55;text-align:center;
+  animation:pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:.75}}
+
+/* ══════ PILARES SECTION ══════ */
+#pilares{
+  background:radial-gradient(ellipse 90% 70% at 50% 50%,rgba(201,168,76,.04) 0%,transparent 70%);
+  gap:2rem;
+}
+.section-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1rem,3.5vw,1.35rem);
+  font-weight:700;
+  background:linear-gradient(135deg,var(--gd),var(--gold),var(--gl));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:.12em;text-align:center;
+}
+.section-accent{width:min(200px,50vw);height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+.pilares-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:.9rem;width:min(420px,94vw);
+}
+.pilar{
+  background:rgba(201,168,76,.03);
+  border:1px solid rgba(201,168,76,.12);
+  border-radius:12px;
+  padding:.9rem 1rem;
+  display:flex;flex-direction:column;gap:.4rem;
+  transition:border-color .3s,background .3s,transform .3s;
+  cursor:default;
+}
+.pilar:hover{
+  border-color:rgba(201,168,76,.35);
+  background:rgba(201,168,76,.06);
+  transform:translateY(-3px);
+}
+.pilar-icon{font-size:1.3rem;line-height:1}
+.pilar-name{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.6rem,2vw,.8rem);
+  font-weight:600;color:var(--gold);
+  letter-spacing:.06em;
+}
+.pilar-desc{
+  font-size:clamp(.55rem,1.8vw,.72rem);
+  font-weight:300;color:var(--dim);line-height:1.4;
+}
+
+/* ══════ PASOS SECTION ══════ */
+#pasos{
+  background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(139,26,26,.06) 0%,transparent 70%);
+  gap:2rem;
+}
+.pasos-list{
+  display:flex;flex-direction:column;gap:0;
+  width:min(420px,94vw);
+  position:relative;
+}
+.pasos-list::before{
+  content:'';position:absolute;left:28px;top:0;bottom:0;width:1px;
+  background:linear-gradient(to bottom,transparent,var(--gold),transparent);
+  opacity:.35;
+}
+.paso{
+  display:flex;gap:1rem;align-items:flex-start;
+  padding:1rem 0;
+  animation:fadeInLeft .6s ease both;
+}
+.paso-num{
+  width:56px;height:56px;border-radius:50%;flex-shrink:0;
+  border:1px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--gold);
+  background:rgba(201,168,76,.06);
+  position:relative;z-index:2;
+  transition:background .3s,box-shadow .3s;
+}
+.paso:hover .paso-num{
+  background:rgba(201,168,76,.15);
+  box-shadow:0 0 20px rgba(201,168,76,.3);
+}
+.paso-icon{font-size:1.2rem;margin-top:.15rem}
+.paso-body{flex:1}
+.paso-name{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.75rem,2.5vw,.95rem);
+  font-weight:600;color:var(--gold);
+  letter-spacing:.08em;margin-bottom:.25rem;
+}
+.paso-desc{font-size:clamp(.6rem,2vw,.78rem);font-weight:300;color:var(--dim);line-height:1.5}
+
+/* ══════ CONTACT SECTION ══════ */
+#contacto{
+  background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(201,168,76,.06) 0%,transparent 70%);
+  gap:1.5rem;
+}
+.actions{
+  display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;
+}
+.action-btn{
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  text-decoration:none;color:var(--white);
+  transition:transform .2s;
+}
+.action-btn:hover{transform:translateY(-3px)}
+.action-icon{
+  width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gd),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;
+  box-shadow:0 4px 20px rgba(201,168,76,.25);
+  transition:box-shadow .3s;
+}
+.action-btn:hover .action-icon{box-shadow:0 6px 28px rgba(201,168,76,.45)}
+.action-label{
+  font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+}
+.catalog-btn{
+  display:inline-flex;align-items:center;gap:.6rem;
+  padding:.85rem 2.2rem;
+  background:linear-gradient(135deg,var(--gd) 0%,var(--gold) 50%,var(--gd) 100%);
+  background-size:200% auto;
+  color:#060606;
+  font-family:'Cinzel',serif;font-size:.72rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;
+  text-decoration:none;border-radius:8px;
+  transition:transform .2s,box-shadow .2s,background-position .4s;
+  box-shadow:0 4px 22px rgba(201,168,76,.25);
+}
+.catalog-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(201,168,76,.45);
+  background-position:right center;
+}
+.footer-copy{
+  font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);opacity:.25;text-align:center;
+}
+
+/* ══ NAV DOTS ══ */
+.nav-dots{
+  position:fixed;right:1.2rem;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:.6rem;z-index:100;
+}
+.dot{
+  width:8px;height:8px;border-radius:50%;
+  border:1px solid rgba(201,168,76,.45);
+  background:transparent;cursor:pointer;
+  transition:background .3s,transform .2s,box-shadow .3s;
+}
+.dot.active{background:var(--gold);transform:scale(1.3);box-shadow:0 0 8px rgba(201,168,76,.6)}
+
+/* ══ REVEAL ANIMATION ══ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.shown{opacity:1;transform:translateY(0)}
+@keyframes fadeInLeft{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+</style>
+</head>
+<body>
+
+<canvas id="cvs"></canvas>
+
+<!-- NAV DOTS -->
+<nav class="nav-dots" id="navDots">
+  <div class="dot active" onclick="scrollTo(0)" title="Inicio"></div>
+  <div class="dot" onclick="scrollTo(1)" title="Tarjeta"></div>
+  <div class="dot" onclick="scrollTo(2)" title="Servicios"></div>
+  <div class="dot" onclick="scrollTo(3)" title="Proceso"></div>
+  <div class="dot" onclick="scrollTo(4)" title="Contacto"></div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="section" id="hero">
+  <div class="hero-logo-wrap reveal">
+    <img class="hero-logo-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAiAAAADICAQAAAC7w0uQAAABIElEQVR4Ae3cIW7DMBiF0e5/0+wWn2zZkhLH7QDe0yRE0A9S0HWEpL4F/1cAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH+3fH3/+P34/X4fX6+/j+fr8fF9P75+vh/fn7cLAAAAAAD7/dY/jqMAAACAfw4AAAAAAADgJO9v/wv8Pz/6L+wAAAB4zg8AAAAAAABO4j4KAAAAAACAk7gLAQAAAAAA4CTuQQAAAAAAAHAStx8AAAAAAABO4vYDAAAAAADASdx+AAAAAAAAOMnrHwAAAAAAAM5yGwUAAAAAAMBZ7kIAAAAAAACc5CYEAAAAAAAAZ7gJAQAAAAAA4AQ3IQAAAAAAANxcXy0d+bJg9VQ1AAAAAElFTkSuQmCC" alt="EAMR Kraken Logo">
+  </div>
+
+  <div class="hero-wordmark reveal">EAMR</div>
+  <div class="hero-sub reveal">Estratega de Activos Musicales Registrables</div>
+
+  <div class="eq-hero reveal" id="eqHero"></div>
+
+  <p class="hero-tagline reveal">Tu historia, nuestra ciencia.<br>Emoción real al instante.</p>
+
+  <a href="#card-section" class="hero-cta reveal">
+    <span>Comienza tu Odisea Sonora</span>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+
+  <div class="scroll-indicator">
+    <span>Desliza</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ══ CARD ══ -->
+<section class="section" id="card-section">
+  <p class="section-label reveal">Tarjeta Digital</p>
+
+  <div class="card-scene reveal" id="cardScene" onclick="flipCard()" title="Toca para girar">
+    <div class="card-flip" id="cardFlip">
+
+      <!-- FRONT (con el nuevo kraken) -->
+      <div class="card-face">
+        <div class="front-bg">
+          <div class="c tl"></div><div class="c tr"></div>
+          <div class="c bl"></div><div class="c br"></div>
+
+          <!-- Aquí se ha reemplazado la imagen del kraken dorado por la imagen proporcionada (kraken11.jpg) -->
+          <img class="front-kraken" src="https://i.imgur.com/1XzZ2sK.jpg" alt="EAMR Kraken">
+
+          <div class="front-logo">EAMR</div>
+          <div class="front-sub">Estratega de Activos Musicales Registrables</div>
+
+          <div class="waves" id="wavesFront"></div>
+
+          <div class="front-name">Edgardo Romero</div>
+          <div class="front-role">Tu historia, nuestra ciencia. Emoción real al instante.</div>
+        </div>
+      </div>
+
+      <!-- BACK (el QR permanece igual) -->
+      <div class="card-face card-back">
+        <div class="back-bg">
+          <div class="cg tl"></div><div class="cg tr"></div>
+          <div class="cg bl"></div><div class="cg br"></div>
+
+          <div class="back-left">
+            <div>
+              <div class="back-title">Servicios EAMR</div>
+              <div class="back-services">
+                <div class="si">
+                  <div class="si-icon">⚙️🎵</div>
+                  <div class="si-text">
+                    <strong>Personalización Total:</strong>
+                    <span>Texto, estilo, instrumentación. Tú decides.</span>
+                  </div>
+                </div>
+                <div class="si">
+                  <div class="si-icon">🎙️⭐</div>
+                  <div class="si-text">
+                    <strong>Calidad de Estudio:</strong>
+                    <span>Sonido profesional sin costos excesivos.</span>
+                  </div>
+                </div>
+                <div class="si">
+                  <div class="si-icon">🔒🌐</div>
+                  <div class="si-text">
+                    <strong>Propiedad & Seguridad:</strong>
+                    <span>Dueño legal de tu canción y todos los derechos.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="back-contact">
+              <div class="cl"><span class="ic">💬</span><a href="https://wa.me/523343215254" target="_blank">3343215254</a></div>
+              <div class="cl"><span class="ic">✉️</span><a href="mailto:eamr_33@proton.me">eamr_33@proton.me</a></div>
+              <div class="cl"><span class="ic">📷</span><a href="https://instagram.com/eamr" target="_blank">@eamr</a></div>
+            </div>
+          </div>
+
+          <div class="back-right">
+            <div class="qr-lbl">Escanea<br>el catálogo</div>
+            <div id="qr-img"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAR8AAAEfCAIAAAD3NVUaAAACAUlEQVR42u3cMW7DMAwF0M65/yEzduneIUthi19yk7ao+AIjCAxHz4simqTy9vF+/6vjjc1ms9lsNpvNZrPZj+M2ej3OH96HJ79+JYzGZre2D1PwcOY89NBYHI3NbmqfZ/b5B+B8N5UURmOz2fc8g9ls9uvt84JYXcNms6/FqcMY9Fa8Xhwjs9nb2Iv5lsX3H8n1sNn/166Ow32EpfbwM/CCmgWbvZMd8pUhs1mlO/N6ymY3tUNepaoVVBFtlZlhs/va568NEyxVFmVayGOz2fdhUrLKYIYq+PCLbHZ3OyQoh9N32tA1vAk2u68dqgdVB1cVs4br2ey+dqUuVseHjSdP9SOz2ZvZw2hyulYu5jHnayibvb1dZVQyFnbUfKc2x2ZvbOdkZTV9p8+Cl+sGbPau9np3Vnjgy/3/bHZre1gQyGtoFc6G/aRsdl97Md+y4q0UyNnsdnboJh7O9VAjHwapbHZ3e2XQsNROU5xsdne7YqoM5spaGZ4R2ex2dgXnz7kH7PKzIJu9sZ33h4bNaivbadhs9rXFMeyluc3+WpXN7muHsLUKWPN/0IVOEza7qT3tOA5eaENezfWw2T3tqk+k2hwaxmSz2ZOGyGHfZMVfy2my2R3sEKdOU5YhK3phXw2bvbEdQsyA5cuezfWw2dvYv3yw2Ww2m81ms9lsdmf7E/uCfZbi9DI/AAAAAElFTkSuQmCC" alt="QR Catálogo EAMR"></div>
+            <div class="qr-url">edheller33.github.io/Music_dem/</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="flip-hint reveal">↺ toca la tarjeta para girar</p>
+</section>
+
+<!-- ══ PILARES ══ -->
+<section class="section" id="pilares">
+  <p class="section-label reveal">El Marco del Servicio</p>
+  <h2 class="section-title reveal">Los 4 Pilares</h2>
+  <div class="section-accent reveal"></div>
+
+  <div class="pilares-grid">
+    <div class="pilar reveal">
+      <div class="pilar-icon">🔮</div>
+      <div class="pilar-name">Identidad Sonora</div>
+      <div class="pilar-desc">Composición única basada en tu historia y emociones.</div>
+    </div>
+    <div class="pilar reveal">
+      <div class="pilar-icon">⚡</div>
+      <div class="pilar-name">Algoritmos de Vanguardia</div>
+      <div class="pilar-desc">Precisión para modelar melodías y letras inolvidables.</div>
+    </div>
+    <div class="pilar reveal">
+      <div class="pilar-icon">🔐</div>
+      <div class="pilar-name">Propiedad Total</div>
+      <div class="pilar-desc">Eres el dueño legal absoluto de tu canción y todos los derechos.</div>
+    </div>
+    <div class="pilar reveal">
+      <div class="pilar-icon">🎸</div>
+      <div class="pilar-name">Géneros Sin Límites</div>
+      <div class="pilar-desc">De balada a corrido, trap o sinfónico. Cualquier estilo es posible.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PASOS ══ -->
+<section class="section" id="pasos">
+  <p class="section-label reveal">Metodología</p>
+  <h2 class="section-title reveal">Tu Canción en 3 Pasos</h2>
+  <div class="section-accent reveal"></div>
+
+  <div class="pasos-list">
+    <div class="paso reveal">
+      <div class="paso-num">1<br><span class="paso-icon">⚙️</span></div>
+      <div class="paso-body">
+        <div class="paso-name">Diseña tu Esencia</div>
+        <div class="paso-desc">Define texto, estilo, instrumentación. Tú decides cada detalle de tu identidad sonora.</div>
+      </div>
+    </div>
+    <div class="paso reveal">
+      <div class="paso-num">2<br><span class="paso-icon">🕐</span></div>
+      <div class="paso-body">
+        <div class="paso-name">Génesis Algorítmica</div>
+        <div class="paso-desc">Nuestra IA broad-spectrum compone. Tu canción lista en tiempo récord.</div>
+      </div>
+    </div>
+    <div class="paso reveal">
+      <div class="paso-num">3<br><span class="paso-icon">🎙️</span></div>
+      <div class="paso-body">
+        <div class="paso-name">Registro y Entrega</div>
+        <div class="paso-desc">Obtén sonido profesional y certificado de propiedad instantáneo. Protege tus activos.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACTO ══ -->
+<section class="section" id="contacto">
+  <p class="section-label reveal">Conecta</p>
+  <h2 class="section-title reveal">Edgardo Romero</h2>
+  <div class="section-accent reveal"></div>
+
+  <div class="actions reveal">
+    <a href="tel:3343215254" class="action-btn">
+      <div class="action-icon">📞</div>
+      <span class="action-label">Llamar</span>
+    </a>
+    <a href="https://wa.me/523343215254" target="_blank" class="action-btn">
+      <div class="action-icon">💬</div>
+      <span class="action-label">WhatsApp</span>
+    </a>
+    <a href="mailto:eamr_33@proton.me" class="action-btn">
+      <div class="action-icon">✉️</div>
+      <span class="action-label">Email</span>
+    </a>
+    <a href="https://instagram.com/eamr" target="_blank" class="action-btn">
+      <div class="action-icon">📷</div>
+      <span class="action-label">Instagram</span>
+    </a>
+  </div>
+
+  <a href="https://edheller33.github.io/Music_dem/" target="_blank" class="catalog-btn reveal">
+    🎵 &nbsp;Ver Catálogo Musical
+  </a>
+
+  <button class="kraken-btn reveal" onclick="openKraken()">
+    <span class="kraken-btn-icon">🐙</span>
+    <span>¿Qué significa el Kraken como identidad de la marca?</span>
+    <span class="kraken-btn-arrow">→</span>
+  </button>
+
+  <p class="footer-copy reveal">© 2026 EAMR – Edgardo Romero · Tu historia, nuestra ciencia</p>
+</section>
+
+<!-- ══ MODAL KRAKEN ══ -->
+<div id="krakenModal" class="km-overlay" onclick="closeKrakenOutside(event)">
+  <div class="km-panel">
+    <button class="km-close" onclick="closeKraken()">✕</button>
+
+    <div class="km-header">
+      <div class="km-header-glow"></div>
+      <div class="km-title-wrap">
+        <span class="km-eyebrow">Identidad de Marca</span>
+        <h2 class="km-title">El Kraken Dorado</h2>
+        <p class="km-subtitle">Símbolo axial de la inteligencia artificial</p>
+      </div>
+    </div>
+
+    <div class="km-body">
+
+      <div class="km-section">
+        <div class="km-section-num">I</div>
+        <div class="km-section-content">
+          <h3 class="km-section-title">Arquitectura General del Escudo</h3>
+          <p class="km-text">La forma exterior del logotipo adopta la silueta de un <strong>escudo heráldico estilizado</strong>. Esta elección no es decorativa sino simbólica: el escudo es históricamente el emblema de protección, autoridad y legitimidad. En el contexto de EAMR, dicha figura representa la función primaria del estratega: <em>salvaguardar las creaciones de sus clientes</em> mediante el registro formal de derechos de propiedad intelectual.</p>
+          <p class="km-text">La paleta cromática —<strong>rojo carmesí, dorado y gris oscuro</strong>— comunica los valores de la marca con precisión. El rojo evoca determinación y pasión. El dorado simboliza valor y excelencia. El gris oscuro aporta sobriedad técnica y profesionalismo.</p>
+        </div>
+      </div>
+
+      <div class="km-divider"></div>
+
+      <div class="km-section">
+        <div class="km-section-num">II</div>
+        <div class="km-section-content">
+          <h3 class="km-section-title">Por qué el Cefalópodo como Metáfora de la IA</h3>
+          <p class="km-text">El pulpo, el calamar y el kraken comparten una arquitectura neurológica extraordinaria: un pulpo posee ~500 millones de neuronas, de las cuales dos tercios se distribuyen en sus brazos, de forma que cada extremidad procesa información de manera <strong>parcialmente autónoma</strong>. Opera mediante inteligencia distribuida, paralela y multimodal.</p>
+          <p class="km-text">Esta arquitectura replica el funcionamiento de los modelos de inteligencia artificial de gran escala: procesamiento simultáneo de múltiples flujos de información —texto, audio, imagen, código— mediante capas distribuidas.</p>
+
+          <div class="km-quote">
+            "El kraken es la única criatura mitológica capaz de abarcar un barco completo con sus tentáculos. La inteligencia artificial de amplio espectro hace precisamente eso con los problemas complejos de la industria musical: los rodea por completo."
+          </div>
+        </div>
+      </div>
+
+      <div class="km-divider"></div>
+
+      <div class="km-section">
+        <div class="km-section-num">II</div>
+        <div class="km-section-content">
+          <h3 class="km-section-title">Los Tentáculos: Dominios de Capacidad</h3>
+          <p class="km-text">Cada tentáculo del Kraken representa un dominio operativo que EAMR activa simultáneamente en beneficio del artista:</p>
+          <div class="km-caps">
+            <div class="km-cap"><span class="km-cap-icon">🎵</span><div><strong>Composición Musical</strong><br><span>Generación y análisis de melodías desde la identidad creativa del artista.</span></div></div>
+            <div class="km-cap"><span class="km-cap-icon">⚙️</span><div><strong>Automatización de Procesos</strong><br><span>Flujos de trabajo para producción, registro y monetización de activos.</span></div></div>
+            <div class="km-cap"><span class="km-cap-icon">💬</span><div><strong>Comunicación y Gestión</strong><br><span>Interlocución con organismos de registro y plataformas de distribución.</span></div></div>
+            <div class="km-cap"><span class="km-cap-icon">🔍</span><div><strong>Análisis e Investigación</strong><br><span>Monitoreo de mercado y detección de infracciones de derechos.</span></div></div>
+            <div class="km-cap"><span class="km-cap-icon">🧬</span><div><strong>Identidad Biométrica</strong><br><span>Registro único de la obra y autenticación de autoría.</span></div></div>
+            <div class="km-cap"><span class="km-cap-icon">📊</span><div><strong>Datos y Cómputo</strong><br><span>Capacidad computacional para el tratamiento algorítmico musical.</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="km-divider"></div>
+
+      <div class="km-section">
+        <div class="km-section-num">III</div>
+        <div class="km-section-content">
+          <h3 class="km-section-title">El Hexágono: Núcleo de Procesamiento</h3>
+          <p class="km-text">La cabeza del Kraken está coronada por un hexágono con trazos de circuito electrónico. El hexágono es la forma más eficiente en la naturaleza para distribuir fuerza y maximizar el espacio —la misma geometría de los panales de abeja— y en ingeniería representa los nodos de procesamiento en circuitos integrados.</p>
+          <p class="km-text">Esta figura comunica que la inteligencia desplegada por los tentáculos tiene un <strong>núcleo computacional preciso, eficiente y estructurado</strong>. Las iniciales ER en el centro refieren a <em>Estrategia y Registro</em>: la misión primaria del sistema.</p>
+        </div>
+      </div>
+
+      <div class="km-divider"></div>
+
+      <div class="km-section">
+        <div class="km-section-num">IV — V</div>
+        <div class="km-section-content">
+          <h3 class="km-section-title">Coherencia Logo · Servicio · Identidad</h3>
+          <div class="km-table">
+            <div class="km-row km-row-head">
+              <span>Pilar</span><span>Concepto</span><span>En el Logo</span>
+            </div>
+            <div class="km-row">
+              <span>🔮 Identidad Sonora</span>
+              <span>Composición única basada en la historia del artista</span>
+              <span>Huella dactilar en el tentáculo</span>
+            </div>
+            <div class="km-row">
+              <span>⚡ Algoritmos</span>
+              <span>Precisión algorítmica para melodías memorables</span>
+              <span>Hexágono con circuito</span>
+            </div>
+            <div class="km-row">
+              <span>🔐 Propiedad Total</span>
+              <span>Titularidad legal absoluta de la obra</span>
+              <span>El escudo heráldico</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="km-conclusion">
+        <h3 class="km-conclusion-title">Conclusión</h3>
+        <p>El logotipo de EAMR es un sistema semiótico coherente. <strong>El escudo es protección jurídica. El kraken es inteligencia artificial distribuida y multimodal. El hexágono es el núcleo de procesamiento tecnológico.</strong> Los tentáculos son los dominios especializados de intervención.</p>
+        <p style="margin-top:.8rem">EAMR no vende música: <em>protege, registra y valoriza</em> las creaciones de sus clientes mediante el despliegue estratégico de inteligencia artificial de amplio espectro.</p>
+      </div>
+
+    </div><!-- /km-body -->
+  </div><!-- /km-panel -->
+</div><!-- /km-overlay -->
+
+<style>
+/* ── BOTÓN KRAKEN ── */
+.kraken-btn{
+  display:inline-flex;align-items:center;gap:.7rem;
+  padding:.85rem 1.6rem;
+  background:transparent;
+  border:1px solid rgba(201,168,76,.35);
+  border-radius:50px;
+  color:var(--gold);
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(.62rem,2.2vw,.78rem);
+  font-weight:500;
+  letter-spacing:.06em;
+  cursor:pointer;
+  transition:border-color .3s,background .3s,box-shadow .3s,transform .2s;
+  position:relative;overflow:hidden;
+}
+.kraken-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.15));
+  opacity:0;transition:opacity .3s;
+}
+.kraken-btn:hover{
+  border-color:rgba(201,168,76,.7);
+  box-shadow:0 0 28px rgba(201,168,76,.2);
+  transform:translateY(-2px);
+}
+.kraken-btn:hover::before{opacity:1}
+.kraken-btn-icon{font-size:1.1rem;animation:wiggle 3s ease-in-out infinite}
+@keyframes wiggle{0%,100%{transform:rotate(0deg)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.kraken-btn-arrow{
+  font-size:.9rem;opacity:.6;
+  transition:transform .3s,opacity .3s;
+}
+.kraken-btn:hover .kraken-btn-arrow{transform:translateX(4px);opacity:1}
+
+/* ── MODAL OVERLAY ── */
+.km-overlay{
+  position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,.85);
+  backdrop-filter:blur(8px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .35s ease;
+}
+.km-overlay.open{opacity:1;pointer-events:all}
+
+/* ── PANEL ── */
+.km-panel{
+  width:min(540px,100vw);
+  max-height:88svh;
+  background:linear-gradient(160deg,#0E0E0E 0%,#141414 60%,#0A0A0A 100%);
+  border:1px solid rgba(201,168,76,.18);
+  border-bottom:none;
+  border-radius:24px 24px 0 0;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  transform:translateY(100%);
+  transition:transform .45s cubic-bezier(.32,0,.2,1);
+  position:relative;
+}
+.km-overlay.open .km-panel{transform:translateY(0)}
+
+/* CLOSE */
+.km-close{
+  position:absolute;top:1rem;right:1rem;z-index:10;
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);
+  color:var(--gold);font-size:.8rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,box-shadow .2s;
+}
+.km-close:hover{background:rgba(201,168,76,.2);box-shadow:0 0 12px rgba(201,168,76,.3)}
+
+/* HEADER */
+.km-header{
+  flex-shrink:0;
+  padding:2rem 1.5rem 1.2rem;
+  border-bottom:1px solid rgba(201,168,76,.1);
+  position:relative;overflow:hidden;
+}
+.km-header-glow{
+  position:absolute;top:-40%;left:50%;transform:translateX(-50%);
+  width:80%;height:120%;
+  background:radial-gradient(ellipse at center,rgba(201,168,76,.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.km-eyebrow{
+  font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);opacity:.55;display:block;margin-bottom:.4rem;
+}
+.km-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.3rem,5vw,1.8rem);
+  font-weight:700;
+  background:linear-gradient(135deg,var(--gd),var(--gold),var(--gl));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.1;margin-bottom:.3rem;
+}
+.km-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.8rem,3vw,1rem);
+  font-style:italic;color:var(--dim);font-weight:300;
+}
+
+/* BODY SCROLL */
+.km-body{
+  overflow-y:auto;flex:1;
+  padding:1.2rem 1.4rem 2rem;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+}
+.km-body::-webkit-scrollbar{width:3px}
+.km-body::-webkit-scrollbar-track{background:transparent}
+.km-body::-webkit-scrollbar-thumb{background:rgba(201,168,76,.3);border-radius:2px}
+
+/* SECTIONS */
+.km-section{display:flex;gap:.9rem;margin-bottom:1.2rem}
+.km-section-num{
+  font-family:'Cinzel',serif;
+  font-size:.55rem;font-weight:700;letter-spacing:.15em;
+  color:var(--gold);opacity:.45;
+  flex-shrink:0;padding-top:.2rem;min-width:28px;
+}
+.km-section-content{flex:1}
+.km-section-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.75rem,2.5vw,.95rem);
+  font-weight:600;color:var(--gold);
+  letter-spacing:.08em;margin-bottom:.6rem;
+}
+.km-text{
+  font-size:clamp(.7rem,2.2vw,.85rem);
+  font-weight:300;color:var(--dim);line-height:1.65;
+  margin-bottom:.6rem;
+}
+.km-text strong{color:var(--white);font-weight:500}
+.km-text em{color:var(--gold);font-style:italic}
+
+/* QUOTE */
+.km-quote{
+  border-left:2px solid var(--gold);
+  padding:.7rem .9rem;
+  margin:.8rem 0;
+  background:rgba(201,168,76,.04);
+  border-radius:0 8px 8px 0;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.78rem,2.5vw,.95rem);
+  font-style:italic;color:var(--white);
+  opacity:.8;line-height:1.55;
+}
+
+/* CAPS GRID */
+.km-caps{display:flex;flex-direction:column;gap:.55rem;margin-top:.7rem}
+.km-cap{
+  display:flex;align-items:flex-start;gap:.6rem;
+  background:rgba(201,168,76,.03);
+  border:1px solid rgba(201,168,76,.08);
+  border-radius:8px;padding:.55rem .7rem;
+  transition:border-color .2s,background .2s;
+}
+.km-cap:hover{border-color:rgba(201,168,76,.2);background:rgba(201,168,76,.06)}
+.km-cap-icon{font-size:.95rem;flex-shrink:0;line-height:1.4}
+.km-cap div strong{
+  font-size:clamp(.62rem,2vw,.76rem);font-weight:600;
+  color:var(--white);display:block;margin-bottom:.15rem;letter-spacing:.03em;
+}
+.km-cap div span{font-size:clamp(.56rem,1.8vw,.68rem);font-weight:300;color:var(--dim);line-height:1.45}
+
+/* TABLE */
+.km-table{margin-top:.7rem;border:1px solid rgba(201,168,76,.12);border-radius:10px;overflow:hidden}
+.km-row{
+  display:grid;grid-template-columns:1.1fr 1.6fr 1.3fr;
+  gap:.5rem;padding:.5rem .7rem;
+  border-bottom:1px solid rgba(201,168,76,.07);
+  font-size:clamp(.54rem,1.7vw,.67rem);color:var(--dim);font-weight:300;
+  align-items:center;
+}
+.km-row:last-child{border-bottom:none}
+.km-row.km-row-head{
+  background:rgba(201,168,76,.05);
+  color:var(--gold);font-weight:600;
+  font-size:clamp(.5rem,1.5vw,.6rem);letter-spacing:.08em;text-transform:uppercase;
+}
+
+/* DIVIDER */
+.km-divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.15),transparent);
+  margin:1rem 0;
+}
+
+/* CONCLUSION */
+.km-conclusion{
+  background:rgba(201,168,76,.04);
+  border:1px solid rgba(201,168,76,.15);
+  border-radius:12px;padding:1rem 1.1rem;
+  margin-top:1rem;
+}
+.km-conclusion-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.7rem,2.2vw,.88rem);
+  font-weight:600;color:var(--gold);
+  letter-spacing:.1em;margin-bottom:.6rem;
+}
+.km-conclusion p{
+  font-size:clamp(.68rem,2.1vw,.82rem);
+  font-weight:300;color:var(--dim);line-height:1.65;
+}
+.km-conclusion strong{color:var(--white);font-weight:500}
+.km-conclusion em{color:var(--gold);font-style:italic}
+</style>
+
+<script>
+// ── PARTICLES ──
+(function(){
+  const cvs=document.getElementById('cvs');
+  const ctx=cvs.getContext('2d');
+  let W,H,pts=[];
+  function resize(){W=cvs.width=innerWidth;H=cvs.height=innerHeight;init()}
+  function init(){
+    pts=[];
+    const N=Math.min(Math.floor(W*H/18000),55);
+    for(let i=0;i<N;i++) pts.push({
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,
+      r:Math.random()*1.4+.4,
+      o:Math.random()*.6+.2
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(201,168,76,${p.o})`;ctx.fill();
+    });
+    // Lines between close particles
+    for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
+      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<100){
+        ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
+        ctx.strokeStyle=`rgba(201,168,76,${.15*(1-d/100)})`;ctx.lineWidth=.5;ctx.stroke();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize);
+  resize();draw();
+})();
+
+// ── EQ BARS ──
+(function(){
+  const eq=document.getElementById('eqHero');
+  const heights=[30,55,80,100,70,45,65,90,60,35,20,50,85,40,75];
+  const speeds=[.6,.9,.7,1.1,.8,.65,.95,.75,1.05,.7,.85,.55,.9,1,.72];
+  heights.forEach((h,i)=>{
+    const s=document.createElement('span');
+    s.style.cssText=`height:${h}%;--s:${speeds[i]}s`;
+    eq.appendChild(s);
+  });
+
+  const wf=document.getElementById('wavesFront');
+  [30,55,80,100,70,45,65,90,60,35,20].forEach((h,i)=>{
+    const s=document.createElement('span');
+    s.style.cssText=`height:${h}%;--s:${.6+i*.1}s`;
+    wf.appendChild(s);
+  });
+})();
+
+// ── FLIP ──
+function flipCard(){
+  document.getElementById('cardScene').classList.toggle('flipped');
+}
+
+// ── SCROLL TO SECTION ──
+const sections=['hero','card-section','pilares','pasos','contacto'];
+function scrollTo(i){document.getElementById(sections[i]).scrollIntoView({behavior:'smooth'})}
+
+// ── NAV DOTS ──
+(function(){
+  const dots=document.querySelectorAll('.dot');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const idx=sections.indexOf(e.target.id);
+        dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+      }
+    });
+  },{threshold:.5});
+  sections.forEach(id=>{ const el=document.getElementById(id); if(el) obs.observe(el); });
+})();
+
+// ── REVEAL ON SCROLL ──
+(function(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('shown'); });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+
+// ── MODAL KRAKEN ──
+function openKraken(){
+  const m=document.getElementById('krakenModal');
+  m.classList.add('open');
+  document.body.style.overflow='hidden';
+  // Reset scroll del body del modal
+  m.querySelector('.km-body').scrollTop=0;
+}
+function closeKraken(){
+  document.getElementById('krakenModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeKrakenOutside(e){
+  if(e.target===document.getElementById('krakenModal')) closeKraken();
+}
+// Cerrar con tecla Escape
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeKraken(); });
+
+// Soporte swipe-down para cerrar en móvil
+(function(){
+  const panel=document.querySelector('.km-panel');
+  let startY=0,isDragging=false;
+  panel.addEventListener('touchstart',e=>{startY=e.touches[0].clientY;isDragging=true},{passive:true});
+  panel.addEventListener('touchmove',e=>{
+    if(!isDragging) return;
+    const dy=e.touches[0].clientY-startY;
+    if(dy>0) panel.style.transform=`translateY(${dy}px)`;
+  },{passive:true});
+  panel.addEventListener('touchend',e=>{
+    const dy=e.changedTouches[0].clientY-startY;
+    panel.style.transform='';
+    if(dy>80) closeKraken();
+    isDragging=false;
+  });
+})();
+</script>
+</body>
+</html>
