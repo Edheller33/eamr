@@ -353,6 +353,35 @@ body::before{
 }
 @keyframes pulse{0%,100%{opacity:.35}50%{opacity:.75}}
 
+/* Back card animated sound waves + particles */
+.back-waves{
+  display:flex;align-items:center;justify-content:center;gap:2px;
+  height:16px;margin-top:.35em;width:100%;
+}
+.back-waves span{
+  display:block;width:2px;border-radius:1px;
+  background:linear-gradient(to top,var(--gd),var(--gl));
+  animation:wv var(--s,1s) ease-in-out infinite alternate;
+}
+.back-bg::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    radial-gradient(2px 2px at 12% 22%, rgba(201,168,76,.55) 0, transparent 60%),
+    radial-gradient(1.5px 1.5px at 78% 15%, rgba(232,201,122,.5) 0, transparent 60%),
+    radial-gradient(2px 2px at 35% 70%, rgba(201,168,76,.4) 0, transparent 60%),
+    radial-gradient(1.5px 1.5px at 88% 60%, rgba(232,201,122,.45) 0, transparent 60%),
+    radial-gradient(1.5px 1.5px at 55% 85%, rgba(201,168,76,.4) 0, transparent 60%),
+    radial-gradient(2px 2px at 20% 50%, rgba(232,201,122,.35) 0, transparent 60%),
+    radial-gradient(1.5px 1.5px at 65% 35%, rgba(201,168,76,.4) 0, transparent 60%);
+  animation:floatParticles 9s ease-in-out infinite;
+  opacity:.8;
+}
+@keyframes floatParticles{
+  0%,100%{transform:translateY(0) translateX(0)}
+  33%{transform:translateY(-6px) translateX(3px)}
+  66%{transform:translateY(4px) translateX(-3px)}
+}
+
 /* ══════ PILARES SECTION ══════ */
 #pilares{
   background:radial-gradient(ellipse 90% 70% at 50% 50%,rgba(201,168,76,.04) 0%,transparent 70%);
@@ -613,8 +642,9 @@ body::before{
 
           <div class="back-right">
             <div class="qr-lbl">Escanea<br>el catálogo</div>
-            <div id="qr-img"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAR8AAAEfCAIAAAD3NVUaAAACAUlEQVR42u3cMW7DMAwF0M65/yEzduneIUthi19yk7ao+AIjCAxHz4simqTy9vF+/6vjjc1ms9lsNpvNZrPZj+M2ej3OH96HJ79+JYzGZre2D1PwcOY89NBYHI3NbmqfZ/b5B+B8N5UURmOz2fc8g9ls9uvt84JYXcNms6/FqcMY9Fa8Xhwjs9nb2Iv5lsX3H8n1sNn/166Ow32EpfbwM/CCmgWbvZMd8pUhs1mlO/N6ymY3tUNepaoVVBFtlZlhs/va568NEyxVFmVayGOz2fdhUrLKYIYq+PCLbHZ3OyQoh9N32tA1vAk2u68dqgdVB1cVs4br2ey+dqUuVseHjSdP9SOz2ZvZw2hyulYu5jHnayibvb1dZVQyFnbUfKc2x2ZvbOdkZTV9p8+Cl+sGbPau9np3Vnjgy/3/bHZre1gQyGtoFc6G/aRsdl97Md+y4q0UyNnsdnboJh7O9VAjHwapbHZ3e2XQsNROU5xsdne7YqoM5spaGZ4R2ex2dgXnz7kH7PKzIJu9sZ33h4bNaivbadhs9rXFMeyluc3+WpXN7muHsLUKWPN/0IVOEza7qT3tOA5eaENezfWw2T3tqk+k2hwaxmSz2ZOGyGHfZMVfy2my2R3sEKdOU5YhK3phXw2bvbEdQsyA5cuezfWw2dvYv3yw2Ww2m81ms9lsdmf7E/uCfZbi9DI/AAAAAElFTkSuQmCC" alt="QR Catálogo EAMR"></div>
+            <div id="qr-img"><img src="assets/qr-catalogo.jpg" alt="QR Catálogo EAMR"></div>
             <div class="qr-url">edheller33.github.io/Music_dem/</div>
+            <div class="back-waves" id="backWaves"></div>
           </div>
         </div>
       </div>
@@ -1103,6 +1133,15 @@ body::before{
     s.style.cssText=`height:${h}%;--s:${.6+i*.1}s`;
     wf.appendChild(s);
   });
+
+  const bw=document.getElementById('backWaves');
+  if(bw){
+    [40,70,100,60,80,30,55,90,45,65,35,75,50].forEach((h,i)=>{
+      const s=document.createElement('span');
+      s.style.cssText=`height:${h}%;--s:${.5+i*.08}s`;
+      bw.appendChild(s);
+    });
+  }
 })();
 
 // ── FLIP ──
