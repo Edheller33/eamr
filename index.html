@@ -295,7 +295,6 @@ document.querySelectorAll('.chip, .cta, .contact-btn').forEach(el=>{
 // Onda animada — divisor sonoro dorado/cian
 const wc = document.getElementById('wave-canvas');
 const wctx = wc.getContext('2d');
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function resizeWave(){
   const dpr = window.devicePixelRatio || 1;
@@ -335,10 +334,10 @@ function drawWave(t){
   }
   wctx.stroke();
 
-  if(!reduceMotion) requestAnimationFrame(()=>drawWave(Date.now()*0.0018));
+  requestAnimationFrame(()=>drawWave(Date.now()*0.0018));
 }
 
-if(reduceMotion){ drawWave(0.8); } else { drawWave(Date.now()*0.0018); }
+drawWave(Date.now()*0.0018);
 </script>
 </body>
 </html>
